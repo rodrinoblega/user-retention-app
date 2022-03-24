@@ -6,6 +6,7 @@ import com.embrace.challenge.frameworks.UserRetentionGateway;
 import com.embrace.challenge.frameworks.instrumentation.Instrumentation;
 import com.embrace.challenge.frameworks.instrumentation.Log4jImpl;
 import com.embrace.challenge.frameworks.interpreters.CSVInputInterpreter;
+import com.embrace.challenge.usecases.UserRetentionUseCase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -23,7 +24,12 @@ public class ApplicationConfiguration {
 
     @Bean
     public UserRetentionController userRetentionController() {
-        return new UserRetentionController(interpreter());
+        return new UserRetentionController(userRetentionUseCase(), interpreter());
+    }
+
+    @Bean
+    public UserRetentionUseCase userRetentionUseCase() {
+        return new UserRetentionUseCase();
     }
 
     @Bean

@@ -1,5 +1,6 @@
 package unit.frameworks.interpreters;
 
+import com.embrace.challenge.domain.entities.ConnectionDate;
 import com.embrace.challenge.domain.entities.Record;
 import com.embrace.challenge.frameworks.instrumentation.Instrumentation;
 import com.embrace.challenge.frameworks.instrumentation.Log4jImpl;
@@ -17,7 +18,7 @@ public class CSVInputInterpreterTest {
 
         List<Record> records = csvInterpreter.run("src/test/resources/input.txt");
 
-        Assertions.assertEquals(List.of(new Record("1234", "20211010")), records);
+        Assertions.assertEquals(List.of(new Record("1234", new ConnectionDate(10, 10, 2021))), records);
     }
 
     @Test

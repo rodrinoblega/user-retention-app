@@ -5,11 +5,19 @@ import java.util.Objects;
 public class Record {
 
     private final String user;
-    private final String date;
+    private final ConnectionDate connectionDate;
 
-    public Record(String user, String date) {
+    public Record(String user, ConnectionDate connectionDate) {
         this.user = user;
-        this.date = date;
+        this.connectionDate = connectionDate;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public ConnectionDate getDate() {
+        return connectionDate;
     }
 
     @Override
@@ -17,11 +25,11 @@ public class Record {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Record record = (Record) o;
-        return Objects.equals(user, record.user) && Objects.equals(date, record.date);
+        return Objects.equals(user, record.user) && Objects.equals(connectionDate, record.connectionDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(user, date);
+        return Objects.hash(user, connectionDate);
     }
 }

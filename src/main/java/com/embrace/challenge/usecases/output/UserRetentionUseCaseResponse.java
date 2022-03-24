@@ -1,15 +1,13 @@
 package com.embrace.challenge.usecases.output;
 
-import com.embrace.challenge.domain.entities.UserRetention;
-
-import java.util.List;
+import com.embrace.challenge.domain.entities.UserRetentionCollection;
 import java.util.Objects;
 
 public class UserRetentionUseCaseResponse {
-    List<UserRetention> userRetentions;
+    private final UserRetentionCollection userRetentionCollection;
 
-    public UserRetentionUseCaseResponse(List<UserRetention> userRetentions) {
-        this.userRetentions = userRetentions;
+    public UserRetentionUseCaseResponse(UserRetentionCollection userRetentionCollection) {
+        this.userRetentionCollection = userRetentionCollection;
     }
 
     @Override
@@ -17,11 +15,11 @@ public class UserRetentionUseCaseResponse {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserRetentionUseCaseResponse that = (UserRetentionUseCaseResponse) o;
-        return Objects.equals(userRetentions, that.userRetentions);
+        return Objects.equals(userRetentionCollection, that.userRetentionCollection);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userRetentions);
+        return Objects.hash(userRetentionCollection);
     }
 }
