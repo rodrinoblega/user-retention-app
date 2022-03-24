@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 public class UserRetentionControllerTest {
 
     @Test
-    public void user_retention_controller_process() {
+    public void process_valid_input_should_return_a_record() {
         UserRetentionController userRetentionController = new UserRetentionController(new CSVInputInterpreter(new Instrumentation(new Log4jImpl())));
         Record record = userRetentionController.process("src/test/resources/input.txt");
 

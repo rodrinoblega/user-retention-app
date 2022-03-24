@@ -19,7 +19,5 @@ public class SecondsToTimeStampTest {
         Date date = new Date(miliSeconds);
         // now we format the res by using SimpleDateFormat
         System.out.println(obj.format(date));
-
-
     }
 }

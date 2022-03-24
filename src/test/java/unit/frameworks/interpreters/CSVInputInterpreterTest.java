@@ -12,7 +12,7 @@ import java.util.List;
 public class CSVInputInterpreterTest {
 
     @Test
-    public void test_csv_interpreter_ok() {
+    public void process_valid_csv_should_return_records_list() {
         CSVInputInterpreter csvInterpreter = new CSVInputInterpreter(new Instrumentation(new Log4jImpl()));
 
         List<Record> records = csvInterpreter.run("src/test/resources/input.txt");
@@ -21,7 +21,7 @@ public class CSVInputInterpreterTest {
     }
 
     @Test
-    public void test_csv_interpreter_no_ok() {
+    public void process_invalid_csv_should_throw_exception() {
         CSVInputInterpreter csvInterpreter = new CSVInputInterpreter(new Instrumentation(new Log4jImpl()));
 
         Assertions.assertThrows(RuntimeException.class, () -> csvInterpreter.run("src/test/resources/not_valid_name.txt"));
