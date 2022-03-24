@@ -13,6 +13,12 @@ public class ConnectionDate {
         this.year = year;
     }
 
+    public boolean isOneDayAfterLastConnection(ConnectionDate lastConnectionDate) {
+        return this.year == lastConnectionDate.year &&
+                this.month == lastConnectionDate.month &&
+                this.day - 1 == lastConnectionDate.day;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -24,11 +30,5 @@ public class ConnectionDate {
     @Override
     public int hashCode() {
         return Objects.hash(day, month, year);
-    }
-
-    public boolean isOneDayAfterLastConnection(ConnectionDate lastConnectionDate) {
-        return lastConnectionDate.year == this.year &&
-                lastConnectionDate.month == this.month &&
-                lastConnectionDate.day == day + 1;
     }
 }

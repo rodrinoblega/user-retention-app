@@ -12,8 +12,12 @@ public class UserRetentionCollection {
         this.userRetentions = new ArrayList<>();
     }
 
+    public UserRetentionCollection(List<UserRetention> userRetentions) {
+        this.userRetentions = userRetentions;
+    }
+
     public void updateRetention(Record record) {
-        Optional<UserRetention> userRetention = getUserRetentionIfExists();
+        Optional<UserRetention> userRetention = getUserRetentionIfExists(record);
 
         userRetention.ifPresentOrElse(
                 userRetentionFounded -> userRetentionFounded.update(record),
@@ -21,9 +25,9 @@ public class UserRetentionCollection {
         );
     }
 
-    private Optional<UserRetention> getUserRetentionIfExists() {
+    private Optional<UserRetention> getUserRetentionIfExists(Record record) {
         return userRetentions.stream()
-                .filter(userRetention -> Boolean.parseBoolean(userRetention.getId()))
+                .filter(userRetention -> userRetention.getId().equals(record.getUser()))
                 .findFirst();
     }
 

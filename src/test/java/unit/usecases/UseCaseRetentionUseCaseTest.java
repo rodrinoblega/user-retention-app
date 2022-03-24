@@ -2,7 +2,6 @@ package unit.usecases;
 
 import com.embrace.challenge.domain.entities.ConnectionDate;
 import com.embrace.challenge.domain.entities.Record;
-import com.embrace.challenge.domain.entities.UserRetention;
 import com.embrace.challenge.domain.entities.UserRetentionCollection;
 import com.embrace.challenge.usecases.UserRetentionUseCase;
 import com.embrace.challenge.usecases.output.UserRetentionUseCaseResponse;
