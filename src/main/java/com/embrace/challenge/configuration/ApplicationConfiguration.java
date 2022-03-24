@@ -1,11 +1,11 @@
 package com.embrace.challenge.configuration;
 
 import com.embrace.challenge.adapters.controllers.UserRetentionController;
-import com.embrace.challenge.adapters.interpreters.Interpreter;
+import com.embrace.challenge.adapters.interpreters.InputInterpreter;
 import com.embrace.challenge.frameworks.UserRetentionGateway;
 import com.embrace.challenge.frameworks.instrumentation.Instrumentation;
 import com.embrace.challenge.frameworks.instrumentation.Log4jImpl;
-import com.embrace.challenge.frameworks.interpreters.CSVInterpreter;
+import com.embrace.challenge.frameworks.interpreters.CSVInputInterpreter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -27,7 +27,7 @@ public class ApplicationConfiguration {
     }
 
     @Bean
-    public Interpreter interpreter() {
-        return new CSVInterpreter(instrumentation());
+    public InputInterpreter interpreter() {
+        return new CSVInputInterpreter(instrumentation());
     }
 }
