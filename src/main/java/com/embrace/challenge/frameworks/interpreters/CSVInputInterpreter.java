@@ -2,6 +2,7 @@ package com.embrace.challenge.frameworks.interpreters;
 
 import com.embrace.challenge.adapters.interpreters.InputInterpreter;
 import com.embrace.challenge.domain.entities.Record;
+import com.embrace.challenge.frameworks.exceptions.CSVException;
 import com.embrace.challenge.frameworks.instrumentation.Instrumentation;
 import com.opencsv.CSVReader;
 import java.io.FileReader;
@@ -34,7 +35,7 @@ public class CSVInputInterpreter implements InputInterpreter {
             }
         } catch (Exception e) {
             instrumentation.logMessage(ERRROR_MESSAGE);
-            throw new RuntimeException(ERRROR_MESSAGE);
+            throw new CSVException(ERRROR_MESSAGE);
         }
     }
 }
