@@ -1,0 +1,48 @@
+plugins {
+    id 'java'
+}
+
+apply plugin: 'jacoco'
+
+configurations {
+    providedRuntime
+    all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+}
+
+group 'src'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter:2.6.4'
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2:2.6.4'
+    implementation 'com.opencsv:opencsv:5.6'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testImplementation 'nl.jqno.equalsverifier:equalsverifier:3.10'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.6.4'
+
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled true
+    }
+
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: ['com/embrace/challenge/Main**'])
+        }))
+    }
+}

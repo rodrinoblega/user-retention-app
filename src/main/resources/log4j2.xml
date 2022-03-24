@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration name="prod-log-config" strict="true" status="WARN">
+
+    <Appenders>
+        <Appender type="Console" name="stdout">
+            <Layout type="PatternLayout" pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p- [Embrace] : %m %n"/>
+        </Appender>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="com.embrace" level="WARN"/>
+
+        <Root level="WARN">
+            <AppenderRef ref="stdout"/>
+        </Root>
+    </Loggers>
+
+</Configuration>
