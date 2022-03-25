@@ -31,7 +31,7 @@ public class CSVInputInterpreter implements InputInterpreter {
         try (CSVReader csv = new CSVReader(new FileReader(input))) {
             String[] lineInArray;
             while ((lineInArray = csv.readNext()) != null) {
-                records.add(new Record(lineInArray[1], DateHelper.process(lineInArray[0])));
+                records.add(new Record(lineInArray[1], DateHelper.secondsToConnectionDate(lineInArray[0])));
             }
         } catch (Exception e) {
             instrumentation.logMessage(ERRROR_MESSAGE);
