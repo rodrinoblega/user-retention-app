@@ -1,6 +1,7 @@
 package unit.adapters.controllers;
 
 import com.embrace.challenge.adapters.controllers.UserRetentionController;
+import com.embrace.challenge.adapters.presenters.UserRetentionPresenterImpl;
 import com.embrace.challenge.domain.entities.ConnectionDate;
 import com.embrace.challenge.domain.entities.Record;
 import com.embrace.challenge.frameworks.instrumentation.Instrumentation;
@@ -14,8 +15,8 @@ public class UserRetentionControllerTest {
 
     @Test
     public void process_valid_input_should_return_a_record() {
-        UserRetentionController userRetentionController = new UserRetentionController(new UserRetentionUseCase(), new CSVInputInterpreter(new Instrumentation(new Log4jImpl())));
-        Record record = userRetentionController.process("src/test/resources/input.txt");
+        UserRetentionController userRetentionController = new UserRetentionController(new UserRetentionUseCase(), new CSVInputInterpreter(new Instrumentation(new Log4jImpl())), new UserRetentionPresenterImpl());
+        Record record = userRetentionController.process("src/test/resources/input_csv.txt");
 
         Assertions.assertEquals(record, new Record("123", new ConnectionDate(10, 10 ,2021)));
     }

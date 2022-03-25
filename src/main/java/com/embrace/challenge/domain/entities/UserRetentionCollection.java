@@ -16,19 +16,23 @@ public class UserRetentionCollection {
         this.userRetentions = userRetentions;
     }
 
-    public void updateRetention(Record record) {
-        Optional<UserRetention> userRetention = getUserRetentionIfExists(record);
+    public void registerARecord(Record record) {
+        Optional<UserRetention> userRetention = findLastUserRetentionIfExists(record);
 
         userRetention.ifPresentOrElse(
-                userRetentionFounded -> userRetentionFounded.update(record),
+                userRetentionFounded -> userRetentionFounded.update(userRetentions, record),
                 () -> userRetentions.add(new UserRetention(record))
         );
     }
 
-    private Optional<UserRetention> getUserRetentionIfExists(Record record) {
+    private Optional<UserRetention> findLastUserRetentionIfExists(Record record) {
         return userRetentions.stream()
                 .filter(userRetention -> userRetention.getId().equals(record.getUser()))
-                .findFirst();
+                .reduce((first, second) -> second);
+    }
+
+    public List<UserRetention> getUserRetentions() {
+        return userRetentions;
     }
 
     @Override

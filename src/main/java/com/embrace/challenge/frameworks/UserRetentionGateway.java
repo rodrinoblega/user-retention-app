@@ -4,6 +4,9 @@ import com.embrace.challenge.adapters.controllers.UserRetentionController;
 import com.embrace.challenge.frameworks.instrumentation.Instrumentation;
 import org.springframework.boot.CommandLineRunner;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 public class UserRetentionGateway implements CommandLineRunner {
 
     private final Instrumentation instrumentation;
@@ -16,5 +19,8 @@ public class UserRetentionGateway implements CommandLineRunner {
 
     public void run(String... ars) {
         instrumentation.logMessage("The app was started");
+        Optional<String> csvPath = Arrays.stream(ars).findFirst();
+        String path = csvPath.orElseThrow(() -> new IllegalArgumentException("Please provide a csv path"));
+        userRetentionController.process(path);
     }
 }

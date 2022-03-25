@@ -23,7 +23,7 @@ public class UseCaseRetentionUseCaseTest {
 
     private UserRetentionUseCaseResponse buildUseCaseResponseExpected() {
         UserRetentionCollection userRetentionCollection = new UserRetentionCollection();
-        userRetentionCollection.updateRetention(
+        userRetentionCollection.registerARecord(
                 new Record(
                         "1234",
                         new ConnectionDate(10, 10, 2020)

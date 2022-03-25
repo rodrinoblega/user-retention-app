@@ -1,9 +1,9 @@
-import com.embrace.challenge.Main;
+import com.embrace.challenge.adapters.controllers.UserRetentionController;
 import com.embrace.challenge.configuration.ApplicationConfiguration;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import com.embrace.challenge.frameworks.instrumentation.Instrumentation;
+import org.junit.jupiter.api.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.io.ByteArrayOutputStream;
@@ -12,27 +12,30 @@ import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-@SpringBootTest(classes = Main.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@SpringBootTest(args = "src/test/resources/entireAppInput.txt")
 @ContextConfiguration(classes = ApplicationConfiguration.class)
 public class UserRetentionAppTest {
 
-    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private static final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+
+    @Autowired
+    Instrumentation instrumentation;
+
+    @Autowired
+    UserRetentionController userRetentionController;
+
+    @BeforeAll
+    public static void setUpStreams() {
+        System.setOut(new PrintStream(outContent));
+    }
 
     @Test
-    void first_test() throws IOException {
-        //setup
-        System.setOut(new PrintStream(outContent));
-
-        //when
-        System.out.println("hola");
-
-        //then
+    void test_entire_application() throws IOException {
         Assertions.assertEquals(getExpectedResponse(), outContent.toString());
     }
 
     private String getExpectedResponse() throws IOException {
-        return Files.readString(Path.of("src/test/resources/expectedResponse.txt"));
+        return Files.readString(Path.of("src/test/resources/entireAppResponse.txt"));
     }
 
 }

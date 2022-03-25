@@ -10,6 +10,10 @@ public class UserRetentionUseCaseResponse {
         this.userRetentionCollection = userRetentionCollection;
     }
 
+    public UserRetentionCollection getUserRetentionCollection() {
+        return userRetentionCollection;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

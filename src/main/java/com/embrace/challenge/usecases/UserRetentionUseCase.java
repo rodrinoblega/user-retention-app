@@ -9,7 +9,7 @@ public class UserRetentionUseCase {
     public UserRetentionUseCaseResponse process(List<Record> records) {
         UserRetentionCollection userRetentionCollection = new UserRetentionCollection();
 
-        records.forEach(userRetentionCollection::updateRetention);
+        records.forEach(userRetentionCollection::registerARecord);
 
         return new UserRetentionUseCaseResponse(userRetentionCollection);
     }

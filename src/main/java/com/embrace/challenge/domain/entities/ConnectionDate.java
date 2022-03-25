@@ -19,6 +19,18 @@ public class ConnectionDate {
                 this.day - 1 == lastConnectionDate.day;
     }
 
+    public int getDay() {
+        return day;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

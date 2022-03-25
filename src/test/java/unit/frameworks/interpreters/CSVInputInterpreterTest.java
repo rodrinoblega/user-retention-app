@@ -16,7 +16,7 @@ public class CSVInputInterpreterTest {
     public void process_valid_csv_should_return_records_list() {
         CSVInputInterpreter csvInterpreter = new CSVInputInterpreter(new Instrumentation(new Log4jImpl()));
 
-        List<Record> records = csvInterpreter.run("src/test/resources/input.txt");
+        List<Record> records = csvInterpreter.run("src/test/resources/input_csv.txt");
 
         Assertions.assertEquals(List.of(new Record("1234", new ConnectionDate(10, 10, 2021))), records);
     }
