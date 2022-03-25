@@ -1,57 +1,57 @@
 package com.embrace.challenge.adapters.presenters;
 
 import com.embrace.challenge.domain.entities.ConnectionDate;
+import com.embrace.challenge.domain.entities.UserRetention;
 import com.embrace.challenge.frameworks.interpreters.DateHelper;
 import com.embrace.challenge.usecases.output.UserRetentionUseCaseResponse;
 import com.embrace.challenge.usecases.presenters.UserRetentionPresenter;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.stream.IntStream;
 
 public class UserRetentionPresenterImpl implements UserRetentionPresenter {
 
     private static final ConnectionDate START_RANGE_DATE = new ConnectionDate(1, 1, 2021);
     private static final ConnectionDate END_RANGE_DATE = new ConnectionDate(14, 1, 2021);
-    private static final int RANGE_BETWEEN_DATES = 14;
-
-    private final Map<ConnectionDate, Integer> mapOfStrikesPerDay = new HashMap<>();
 
     @Override
     public void present(UserRetentionUseCaseResponse userRetentionUseCaseResponse) {
-        userRetentionUseCaseResponse.getUserRetentionCollection().getUserRetentions().forEach(userRetention -> {
-            if (isBetweenRange(userRetention.getInitialStreakDate())) {
-                mapOfStrikesPerDay.computeIfPresent(userRetention.getInitialStreakDate(), (key, val) -> val = val + 1);
-                mapOfStrikesPerDay.computeIfAbsent(userRetention.getInitialStreakDate(), val -> 1);
-            }
-        });
+        List<UserRetention> userRetentions = userRetentionUseCaseResponse.getUserRetentionCollection().getUserRetentions();
+        ConnectionDate dateToAnalizeStreaks = START_RANGE_DATE;
+        
 
-        ConnectionDate actualConnectionDate = START_RANGE_DATE;
+        while (dateToAnalizeStreaks.isLessThan(END_RANGE_DATE)) {
+            
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(dateToAnalizeStreaks.getDay());
 
-        while(DateHelper.isLessDateThan(actualConnectionDate, END_RANGE_DATE)) {
-            String finalString = "";
-            finalString = finalString.concat(String.valueOf(actualConnectionDate.getDay()));
-            int actualRange = 1;
-            while (actualRange < RANGE_BETWEEN_DATES) {
-                int finalActualRange = actualRange;
-                ConnectionDate finalActualConnectionDate = actualConnectionDate;
-                long quantityInThisRange =
-                        userRetentionUseCaseResponse.getUserRetentionCollection().getUserRetentions().stream()
-                                .filter(userRetention -> userRetention.getConsecutiveDaysConnected() == finalActualRange)
-                                .filter(userRetention -> userRetention.getInitialStreakDate().equals(finalActualConnectionDate))
-                                .count();
-                actualRange = actualRange + 1;
-
-                finalString = finalString.concat(",".concat(String.valueOf(quantityInThisRange)));
-            }
-            actualConnectionDate = DateHelper.addOneDay(actualConnectionDate);
-
-
-            System.out.println(finalString);
+            processConsecutivelyOfAllPossibleInitialStreakDates(userRetentions, dateToAnalizeStreaks, stringBuilder);
+            
+            dateToAnalizeStreaks = addOneDay(dateToAnalizeStreaks);
+            System.out.println(stringBuilder);
         }
     }
 
-    private boolean isBetweenRange(ConnectionDate maxInitialStreakDate) {
-        return DateHelper.isBetweenDates(maxInitialStreakDate, START_RANGE_DATE, END_RANGE_DATE);
+    private void processConsecutivelyOfAllPossibleInitialStreakDates(List<UserRetention> userRetentions, ConnectionDate analizedDate, StringBuilder stringBuilder) {
+        int initialPossibleDayOfStreak = START_RANGE_DATE.getDay();
+        int finalPossibleDayOfStreak = END_RANGE_DATE.getDay();
+
+        IntStream.range(initialPossibleDayOfStreak, finalPossibleDayOfStreak).forEach(
+                currentPossibleStreakDate -> {
+                    int quantityInThisRange = obtainConsecutivenessOfPossiblestreakDay(userRetentions, analizedDate, currentPossibleStreakDate);
+                    stringBuilder.append(",").append(quantityInThisRange);
+                }
+        );
     }
 
+    private int obtainConsecutivenessOfPossiblestreakDay(List<UserRetention> userRetentions, ConnectionDate analizedDate, int currentPossibleStreakDate) {
+        return (int) userRetentions.stream()
+                .filter(userRetention -> userRetention.getConsecutiveDaysConnected() == currentPossibleStreakDate)
+                .filter(userRetention -> userRetention.getInitialStreakDate().equals(analizedDate))
+                .count();
+    }
+
+    private ConnectionDate addOneDay(ConnectionDate streakDateToAnalize) {
+        return DateHelper.addOneDay(streakDateToAnalize);
+    }
 }

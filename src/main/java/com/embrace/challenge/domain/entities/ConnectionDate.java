@@ -1,11 +1,13 @@
 package com.embrace.challenge.domain.entities;
 
+import com.embrace.challenge.frameworks.interpreters.DateHelper;
+
 import java.util.Objects;
 
 public class ConnectionDate {
-    private final int day;
-    private final int month;
-    private final int year;
+    private int day;
+    private int month;
+    private int year;
 
     public ConnectionDate(int day, int month, int year) {
         this.day = day;
@@ -42,5 +44,13 @@ public class ConnectionDate {
     @Override
     public int hashCode() {
         return Objects.hash(day, month, year);
+    }
+
+    public boolean isLessThan(ConnectionDate endRangeDate) {
+        return DateHelper.isLessDateThan(this, endRangeDate);
+    }
+
+    public ConnectionDate addOneDay() {
+         return DateHelper.addOneDay(this);
     }
 }
