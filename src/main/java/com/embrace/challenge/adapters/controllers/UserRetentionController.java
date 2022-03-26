@@ -1,7 +1,6 @@
 package com.embrace.challenge.adapters.controllers;
 
 import com.embrace.challenge.adapters.interpreters.InputInterpreter;
-import com.embrace.challenge.domain.entities.ConnectionDate;
 import com.embrace.challenge.domain.entities.DateRange;
 import com.embrace.challenge.domain.entities.Record;
 import com.embrace.challenge.usecases.UserRetentionUseCase;
@@ -22,13 +21,11 @@ public class UserRetentionController {
         this.userRetentionPresenter = userRetentionPresenter;
     }
 
-    public Record process(String input, DateRange dateRange) {
+    public void process(String input, DateRange dateRange) {
         List<Record> records = inputInterpreter.run(input);
 
         UserRetentionUseCaseResponse userRetentionUseCaseResponse = userRetentionUseCase.process(records);
 
         userRetentionPresenter.present(userRetentionUseCaseResponse, dateRange);
-
-        return new Record("123", new ConnectionDate(10, 10, 2021));
     }
 }

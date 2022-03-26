@@ -12,7 +12,7 @@ import java.util.List;
 
 public class UseCaseRetentionUseCaseTest {
     @Test
-    public void use_case_retention_ok() {
+    public void proces_should_return_user_retention_collection_with_one_user_retention() {
         UserRetentionUseCase userRetentionUseCase = new UserRetentionUseCase();
 
         UserRetentionUseCaseResponse useCaseResponse = userRetentionUseCase.process(List.of(new Record("1234", new ConnectionDate(10, 10, 2020))));

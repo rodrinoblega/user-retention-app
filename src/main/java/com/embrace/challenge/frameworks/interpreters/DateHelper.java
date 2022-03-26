@@ -108,7 +108,7 @@ public class DateHelper {
         }
     }
 
-    public static boolean areInTheSameMonth(ConnectionDate initialDate, ConnectionDate finalDate) {
+    public static boolean areInTheSameMonthAndStartTheFirstOfMonth(ConnectionDate initialDate, ConnectionDate finalDate) {
         return initialDate.getDay() == 1 &&
                 initialDate.isLessThan(finalDate) &&
                 initialDate.getYear() == finalDate.getYear() &&

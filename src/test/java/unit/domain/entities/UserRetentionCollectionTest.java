@@ -19,7 +19,7 @@ public class UserRetentionCollectionTest {
     }
 
     @Test
-    public void update_retention_not_existing_user() {
+    public void register_record_of_a_non_existing_user_should_return_a_new_user_retention_record() {
         UserRetentionCollection userRetentionCollection = new UserRetentionCollection();
 
         userRetentionCollection.registerARecord(new Record("1234", new ConnectionDate(10, 10, 2020)));
@@ -28,7 +28,7 @@ public class UserRetentionCollectionTest {
     }
 
     @Test
-    public void update_retention_existing_user_not_consecutive() {
+    public void register_record_of_a_existing_user_not_consecutive_should_return_a_new_user_retention_record() {
         UserRetentionCollection userRetentionCollection = new UserRetentionCollection(
                 new ArrayList<>(List.of(
                         new UserRetention(
@@ -47,7 +47,7 @@ public class UserRetentionCollectionTest {
     }
 
     @Test
-    public void update_retention_existing_user_consecutive() {
+    public void register_record_of_a_existing_user_consecutive_should_return_an_update_of_user_rention() {
         UserRetentionCollection userRetentionCollection = new UserRetentionCollection(
                 new ArrayList<>(List.of(
                         new UserRetention(
@@ -66,7 +66,7 @@ public class UserRetentionCollectionTest {
     }
 
     @Test
-    public void update_retention_existing_user_consecutive_some_days_cut_with_consecutiveness() {
+    public void register_record_of_a_existing_user_not_consecutive_should_return_a_new_user_rentention_without_updating_that_last_record() {
         UserRetentionCollection userRetentionCollection = new UserRetentionCollection(
                 new ArrayList<>(List.of(
                         new UserRetention(
@@ -82,41 +82,6 @@ public class UserRetentionCollectionTest {
         userRetentionCollection.registerARecord(new Record("1234", new ConnectionDate(15, 10, 2020)));
 
         Assertions.assertEquals(buildExistingUserConsecutiveCutConsecutivenessExpected(), userRetentionCollection);
-    }
-
-    @Test
-    public void update_retention_existing_user_consecutive_some_days_change_consecutive_dates() {
-        UserRetentionCollection userRetentionCollection = new UserRetentionCollection(
-                new ArrayList<>(List.of(
-                        new UserRetention(
-                                "1234",
-                                3,
-                                new ConnectionDate(9, 10, 2020),
-                                new ConnectionDate(11, 10, 2020)
-                        )
-                )
-            )
-        );
-
-        userRetentionCollection.registerARecord(new Record("1234", new ConnectionDate(15, 10, 2020)));
-        userRetentionCollection.registerARecord(new Record("1234", new ConnectionDate(16, 10, 2020)));
-        userRetentionCollection.registerARecord(new Record("1234", new ConnectionDate(17, 10, 2020)));
-        userRetentionCollection.registerARecord(new Record("1234", new ConnectionDate(18, 10, 2020)));
-
-        Assertions.assertEquals(buildExistingUserConsecutiveSomeDaysChangeConsecutiveDates(), userRetentionCollection);
-    }
-
-    @Test
-    public void update_retention_existing_user_consecutive_with_record_date_equal_last_connection_date() {
-        UserRetentionCollection userRetentionCollection = new UserRetentionCollection(new ArrayList<>());
-
-        userRetentionCollection.registerARecord(new Record("1234", new ConnectionDate(1, 10, 2020)));
-        userRetentionCollection.registerARecord(new Record("1234", new ConnectionDate(1, 10, 2020)));
-        userRetentionCollection.registerARecord(new Record("1234", new ConnectionDate(2, 10, 2020)));
-        userRetentionCollection.registerARecord(new Record("1234", new ConnectionDate(3, 10, 2020)));
-        userRetentionCollection.registerARecord(new Record("1234", new ConnectionDate(4, 10, 2020)));
-
-        Assertions.assertEquals(buildExpectedWithSameDayThanLastConnected(), userRetentionCollection);
     }
 
     private UserRetentionCollection buildNotExistingUserExpected() {
@@ -178,38 +143,6 @@ public class UserRetentionCollectionTest {
                                 1,
                                 new ConnectionDate(15, 10, 2020),
                                 new ConnectionDate(15, 10, 2020)
-                        )
-                )
-        );
-    }
-
-    private UserRetentionCollection buildExistingUserConsecutiveSomeDaysChangeConsecutiveDates() {
-        return new UserRetentionCollection(
-                List.of(
-                        new UserRetention(
-                                "1234",
-                                3,
-                                new ConnectionDate(9, 10, 2020),
-                                new ConnectionDate(11, 10, 2020)
-                        ),
-                        new UserRetention(
-                                "1234",
-                                4,
-                                new ConnectionDate(15, 10, 2020),
-                                new ConnectionDate(18, 10, 2020)
-                        )
-                )
-        );
-    }
-
-    private UserRetentionCollection buildExpectedWithSameDayThanLastConnected() {
-        return new UserRetentionCollection(
-                List.of(
-                        new UserRetention(
-                                "1234",
-                                4,
-                                new ConnectionDate(1, 10, 2020),
-                                new ConnectionDate(4, 10, 2020)
                         )
                 )
         );

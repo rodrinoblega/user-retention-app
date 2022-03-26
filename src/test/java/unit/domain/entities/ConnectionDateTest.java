@@ -13,21 +13,21 @@ public class ConnectionDateTest {
     }
 
     @Test
-    public void test_isOneDayAfterLastConnection_different_year() {
+    public void isOneDayAfterLastConnection_different_year_should_return_fase() {
         ConnectionDate actualConnectionDate = new ConnectionDate(11, 10, 2021);
 
         Assertions.assertFalse(actualConnectionDate.isOneDayAfterLastConnection(new ConnectionDate(10, 10, 2022)));
     }
 
     @Test
-    public void test_isOneDayAfterLastConnection_different_month() {
+    public void isOneDayAfterLastConnection_different_month_should_return_false() {
         ConnectionDate actualConnectionDate = new ConnectionDate(11, 12, 2021);
 
         Assertions.assertFalse(actualConnectionDate.isOneDayAfterLastConnection(new ConnectionDate(10, 11, 2021)));
     }
 
     @Test
-    public void test_add_one_day() {
+    public void test_add_one_day_should_return_connection_date_adding_one_day() {
         ConnectionDate onnectionDateToAddDay = new ConnectionDate(11, 12, 2021);
         ConnectionDate actualConnectionDate = onnectionDateToAddDay.addOneDay();
 

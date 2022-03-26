@@ -23,6 +23,5 @@ public class UserRetentionGateway implements CommandLineRunner {
         ValidatedInput validatedInput = inputValidation.validateAndReturnInput(ars);
 
         userRetentionController.process(validatedInput.getPath(), validatedInput.getDateRange());
-
     }
 }

@@ -32,7 +32,7 @@ public class DateRangeInterpreterImpl implements DateRangeInterpreter {
     }
 
     private boolean areInTheSameMonthAndStartTheFirstOfMonth(ConnectionDate initialDate, ConnectionDate finalDate) {
-        return DateHelper.areInTheSameMonth(initialDate, finalDate);
+        return DateHelper.areInTheSameMonthAndStartTheFirstOfMonth(initialDate, finalDate);
     }
 
     private boolean validateIfThereAreRangeDatesAsArgs(String[] ars) {
