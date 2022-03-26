@@ -43,7 +43,7 @@ public class UserRetentionPresenterImpl implements UserRetentionPresenter {
         int initialPossibleDayOfStreak = sartRangeDate.getDay();
         int finalPossibleDayOfStreak = endRangeDate.getDay();
 
-        IntStream.range(initialPossibleDayOfStreak, finalPossibleDayOfStreak).forEach(
+        IntStream.rangeClosed(initialPossibleDayOfStreak, finalPossibleDayOfStreak).forEach(
                 currentPossibleInitialStreakDate -> {
                     int quantityInThisRange = obtainConsecutivenessOfPossibleStreakDay(userRetentions, dateToAnalizeStreaks, currentPossibleInitialStreakDate);
                     stringBuilder.append(",").append(quantityInThisRange);

@@ -106,13 +106,6 @@ public class DateHelperTest extends DateHelper {
     }
 
     @Test
-    public void not_valid_string_to_date_should_thrown_exception() {
-        String date = "asdasd";
-
-        Assertions.assertThrows(DateHelperException.class, () -> DateHelper.stringToDate(date));
-    }
-
-    @Test
     void different_month_are_in_the_same_month_and_start_the_first_of_month_should_return_false() {
         ConnectionDate initialConnectionDate = new ConnectionDate(1, 10, 2021);
         ConnectionDate finalConnectionDate = new ConnectionDate(20, 9, 2021);

@@ -31,4 +31,18 @@ public class DateRangeInterpreterImplTest {
 
         Assertions.assertEquals(new DateRange(new ConnectionDate(1,1,2021), new ConnectionDate(14,1,2021)), dateRange);
     }
+
+    @Test
+    public void ars_with_invalid_range_date_should_return_default_range_date() {
+        DateRange dateRange = dateRangeInterpreter.obtainsDateRangeIfApply(new String[] {"path", "211111", "1111111"});
+
+        Assertions.assertEquals(new DateRange(new ConnectionDate(1,1,2021), new ConnectionDate(14,1,2021)), dateRange);
+    }
+
+    @Test
+    public void ars_with_letters_as_range_date_should_return_default_range_date() {
+        DateRange dateRange = dateRangeInterpreter.obtainsDateRangeIfApply(new String[] {"path", "asd", "asd"});
+
+        Assertions.assertEquals(new DateRange(new ConnectionDate(1,1,2021), new ConnectionDate(14,1,2021)), dateRange);
+    }
 }

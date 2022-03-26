@@ -93,19 +93,14 @@ public class DateHelper {
         }
     }
 
-    public static ConnectionDate stringToDate(String initialString) {
-        try {
+    public static ConnectionDate stringToDate(String initialString) throws ParseException {
+        Date initialDate = new SimpleDateFormat("ddMMyyyy").parse(initialString);
 
-            Date initialDate = new SimpleDateFormat("ddMMyyyy").parse(initialString);
+        Calendar calendarUtil = Calendar.getInstance();
+        calendarUtil.setTime(initialDate);
 
-            Calendar calendarUtil = Calendar.getInstance();
-            calendarUtil.setTime(initialDate);
+        return new ConnectionDate(calendarUtil.get(Calendar.DAY_OF_MONTH), calendarUtil.get(Calendar.MONTH) + 1, calendarUtil.get(Calendar.YEAR));
 
-            return new ConnectionDate(calendarUtil.get(Calendar.DAY_OF_MONTH), calendarUtil.get(Calendar.MONTH) + 1, calendarUtil.get(Calendar.YEAR));
-
-        } catch (ParseException e) {
-            throw new DateHelperException("There was an error in stringToDate()");
-        }
     }
 
     public static boolean areInTheSameMonthAndStartTheFirstOfMonth(ConnectionDate initialDate, ConnectionDate finalDate) {

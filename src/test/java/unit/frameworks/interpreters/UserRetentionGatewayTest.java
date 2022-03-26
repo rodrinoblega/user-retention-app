@@ -17,7 +17,6 @@ public class UserRetentionGatewayTest {
 
     private final Instrumentation instrumentation = new Instrumentation(new Log4jImpl());
     UserRetentionGateway userRetentionGateway = new UserRetentionGateway(
-            instrumentation,
             new UserRetentionController(
                     new UserRetentionUseCase(),
                     new CSVInputInterpreter(instrumentation),

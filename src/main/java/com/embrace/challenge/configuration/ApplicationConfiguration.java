@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
 public class ApplicationConfiguration {
     @Bean
     public UserRetentionGateway userRetention() {
-        return new UserRetentionGateway(instrumentation(), userRetentionController(), inputValidation());
+        return new UserRetentionGateway(userRetentionController(), inputValidation());
     }
 
     @Bean

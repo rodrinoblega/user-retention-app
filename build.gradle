@@ -1,8 +1,12 @@
 plugins {
     id 'java'
+    id "org.springframework.boot" version "2.6.4"
 }
 
+apply plugin: 'application'
+apply plugin: 'java'
 apply plugin: 'jacoco'
+apply plugin: 'org.springframework.boot'
 
 configurations {
     providedRuntime
@@ -12,7 +16,7 @@ configurations {
 }
 
 group 'src'
-version '1.0-SNAPSHOT'
+version '1.0.0.test'
 
 repositories {
     mavenCentral()
