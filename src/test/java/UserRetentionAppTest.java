@@ -12,7 +12,7 @@ import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-@SpringBootTest(args = "src/test/resources/entireAppInput.txt")
+@SpringBootTest(args = {"src/test/resources/entireAppInput.txt", "25101991", "25101991"})
 @ContextConfiguration(classes = ApplicationConfiguration.class)
 public class UserRetentionAppTest {
 

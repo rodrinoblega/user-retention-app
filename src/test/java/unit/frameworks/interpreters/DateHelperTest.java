@@ -104,4 +104,49 @@ public class DateHelperTest extends DateHelper {
 
         Assertions.assertThrows(DateHelperException.class, () -> DateHelper.isBetweenDates(actualConnectionDate, actualConnectionDate, finalConnectionDate));
     }
+
+    @Test
+    public void string_to_date_thrown_exception() {
+        String date = "asdasd";
+
+        Assertions.assertThrows(DateHelperException.class, () -> DateHelper.stringToDate(date));
+    }
+
+    @Test void are_in_the_same_month_first_day_one() {
+        ConnectionDate initialConnectionDate = new ConnectionDate(1, 10, 2021);
+        ConnectionDate finalConnectionDate = new ConnectionDate(20, 9, 2021);
+
+        Assertions.assertFalse(DateHelper.areInTheSameMonth(initialConnectionDate, finalConnectionDate));
+    }
+
+    @Test void are_in_the_same_month_initial_date_not_less_final_date() {
+        ConnectionDate initialConnectionDate = new ConnectionDate(2, 10, 2021);
+        ConnectionDate finalConnectionDate = new ConnectionDate(20, 9, 2021);
+
+        Assertions.assertFalse(DateHelper.areInTheSameMonth(initialConnectionDate, finalConnectionDate));
+    }
+
+    @Test
+    void are_in_the_same_month_initial_date_less_final_date() {
+        ConnectionDate initialConnectionDate = new ConnectionDate(1, 10, 2021);
+        ConnectionDate finalConnectionDate = new ConnectionDate(3, 10, 2021);
+
+        Assertions.assertTrue(DateHelper.areInTheSameMonth(initialConnectionDate, finalConnectionDate));
+    }
+
+    @Test
+    void are_in_the_same_month_not_in_the_same_year() {
+        ConnectionDate initialConnectionDate = new ConnectionDate(1, 10, 2021);
+        ConnectionDate finalConnectionDate = new ConnectionDate(3, 10, 2022);
+
+        Assertions.assertFalse(DateHelper.areInTheSameMonth(initialConnectionDate, finalConnectionDate));
+    }
+
+    @Test
+    void are_in_the_same_month_not_in_the_same_month() {
+        ConnectionDate initialConnectionDate = new ConnectionDate(1, 10, 2021);
+        ConnectionDate finalConnectionDate = new ConnectionDate(3, 11, 2021);
+
+        Assertions.assertFalse(DateHelper.areInTheSameMonth(initialConnectionDate, finalConnectionDate));
+    }
 }

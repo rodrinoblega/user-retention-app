@@ -1,6 +1,7 @@
 package com.embrace.challenge.adapters.presenters;
 
 import com.embrace.challenge.domain.entities.ConnectionDate;
+import com.embrace.challenge.domain.entities.DateRange;
 import com.embrace.challenge.domain.entities.UserRetention;
 import com.embrace.challenge.frameworks.interpreters.DateHelper;
 import com.embrace.challenge.usecases.output.UserRetentionUseCaseResponse;
@@ -11,16 +12,18 @@ import java.util.stream.IntStream;
 
 public class UserRetentionPresenterImpl implements UserRetentionPresenter {
 
-    private static final ConnectionDate START_RANGE_DATE = new ConnectionDate(1, 1, 2021);
-    private static final ConnectionDate END_RANGE_DATE = new ConnectionDate(14, 1, 2021);
+    private ConnectionDate sartRangeDate;
+    private ConnectionDate endRangeDate;
 
     @Override
-    public void present(UserRetentionUseCaseResponse userRetentionUseCaseResponse) {
+    public void present(UserRetentionUseCaseResponse userRetentionUseCaseResponse, DateRange dateRange) {
+        setInitialAndFinalRangeDate(dateRange);
+
         List<UserRetention> userRetentions = userRetentionUseCaseResponse.getUserRetentionCollection().getUserRetentions();
-        ConnectionDate dateToAnalizeStreaks = START_RANGE_DATE;
+        ConnectionDate dateToAnalizeStreaks = sartRangeDate;
         
 
-        while (dateToAnalizeStreaks.isLessThan(END_RANGE_DATE)) {
+        while (dateToAnalizeStreaks.isLessThan(endRangeDate)) {
             
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(dateToAnalizeStreaks.getDay());
@@ -32,9 +35,14 @@ public class UserRetentionPresenterImpl implements UserRetentionPresenter {
         }
     }
 
+    private void setInitialAndFinalRangeDate(DateRange dateRange) {
+        sartRangeDate = dateRange.getInitialDate();
+        endRangeDate = dateRange.getFinalDate();
+    }
+
     private void processConsecutivelyOfAllPossibleInitialStreakDates(List<UserRetention> userRetentions, ConnectionDate analizedDate, StringBuilder stringBuilder) {
-        int initialPossibleDayOfStreak = START_RANGE_DATE.getDay();
-        int finalPossibleDayOfStreak = END_RANGE_DATE.getDay();
+        int initialPossibleDayOfStreak = sartRangeDate.getDay();
+        int finalPossibleDayOfStreak = endRangeDate.getDay();
 
         IntStream.range(initialPossibleDayOfStreak, finalPossibleDayOfStreak).forEach(
                 currentPossibleStreakDate -> {

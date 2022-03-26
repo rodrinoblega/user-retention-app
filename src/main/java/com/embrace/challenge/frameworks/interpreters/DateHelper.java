@@ -104,4 +104,24 @@ public class DateHelper {
             throw new DateHelperException("There was an error in addOneDay() method");
         }
     }
+
+    public static ConnectionDate stringToDate(String initialString) {
+        try {
+            Date initialDate = new SimpleDateFormat("ddMMyyyy").parse(initialString);
+
+            Calendar calendarUtil = Calendar.getInstance();
+            calendarUtil.setTime(initialDate);
+
+            return new ConnectionDate(calendarUtil.get(Calendar.DAY_OF_MONTH), calendarUtil.get(Calendar.MONTH) + 1, calendarUtil.get(Calendar.YEAR));
+        } catch (ParseException e) {
+            throw new DateHelperException("There was an error in stringToDate()");
+        }
+    }
+
+    public static boolean areInTheSameMonth(ConnectionDate initialDate, ConnectionDate finalDate) {
+        return initialDate.getDay() == 1 &&
+                initialDate.isLessThan(finalDate) &&
+                initialDate.getYear() == finalDate.getYear() &&
+                initialDate.getMonth() == finalDate.getMonth();
+    }
 }

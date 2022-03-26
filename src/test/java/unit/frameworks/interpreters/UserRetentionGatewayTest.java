@@ -7,6 +7,7 @@ import com.embrace.challenge.frameworks.exceptions.CSVException;
 import com.embrace.challenge.frameworks.instrumentation.Instrumentation;
 import com.embrace.challenge.frameworks.instrumentation.Log4jImpl;
 import com.embrace.challenge.frameworks.interpreters.CSVInputInterpreter;
+import com.embrace.challenge.frameworks.interpreters.DateRangeInterpreterImpl;
 import com.embrace.challenge.usecases.UserRetentionUseCase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -20,12 +21,12 @@ public class UserRetentionGatewayTest {
                     new UserRetentionUseCase(),
                     new CSVInputInterpreter(instrumentation),
                     new UserRetentionPresenterImpl()
-            )
+            ),
+            new DateRangeInterpreterImpl(instrumentation)
     );
 
     @Test
     public void test_exception_when_no_args() {
         Assertions.assertThrows(CSVException.class, () -> userRetentionGateway.run());
-
     }
 }
