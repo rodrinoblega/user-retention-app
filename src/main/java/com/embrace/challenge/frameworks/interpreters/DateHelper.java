@@ -121,9 +121,9 @@ public class DateHelper {
         private final String formattedYear;
 
         public TwoDecimalFormattedConnectionDate(ConnectionDate connectionDate) {
-            this.formattedDay = String.format("%02d", connectionDate.getYear());
+            this.formattedDay = String.format("%02d", connectionDate.getDay());
             this.formattedMonth = String.format("%02d", connectionDate.getMonth());
-            this.formattedYear = String.format("%02d", connectionDate.getDay());
+            this.formattedYear = String.format("%02d", connectionDate.getYear());
         }
 
         public String yyyyMMdd() {

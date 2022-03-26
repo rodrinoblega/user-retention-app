@@ -8,6 +8,7 @@ import com.embrace.challenge.frameworks.instrumentation.Instrumentation;
 import com.embrace.challenge.frameworks.instrumentation.Log4jImpl;
 import com.embrace.challenge.frameworks.interpreters.CSVInputInterpreter;
 import com.embrace.challenge.frameworks.interpreters.DateRangeInterpreterImpl;
+import com.embrace.challenge.frameworks.validations.InputValidation;
 import com.embrace.challenge.usecases.UserRetentionUseCase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,9 @@ public class UserRetentionGatewayTest {
                     new CSVInputInterpreter(instrumentation),
                     new UserRetentionPresenterImpl()
             ),
-            new DateRangeInterpreterImpl(instrumentation)
+            new InputValidation(
+                    new DateRangeInterpreterImpl(instrumentation)
+            )
     );
 
     @Test

@@ -21,7 +21,7 @@ public class DateRangeInterpreterImpl implements DateRangeInterpreter {
             ConnectionDate initialDate = DateHelper.stringToDate(initialString);
             ConnectionDate finalDate = DateHelper.stringToDate(finalString);
 
-            if (isAreInTheSameMonth(initialDate, finalDate)) {
+            if (areInTheSameMonthAndStartTheFirstOfMonth(initialDate, finalDate)) {
                 return new DateRange(initialDate, finalDate);
             }
             instrumentation.logMessage("There was an error in your range dates. They should have a ddMMyyyy format, be in the same month and start the first day of the month.");
@@ -31,7 +31,7 @@ public class DateRangeInterpreterImpl implements DateRangeInterpreter {
         return new DateRange(new ConnectionDate(1, 1, 2021), new ConnectionDate(14, 1, 2021));
     }
 
-    private boolean isAreInTheSameMonth(ConnectionDate initialDate, ConnectionDate finalDate) {
+    private boolean areInTheSameMonthAndStartTheFirstOfMonth(ConnectionDate initialDate, ConnectionDate finalDate) {
         return DateHelper.areInTheSameMonth(initialDate, finalDate);
     }
 

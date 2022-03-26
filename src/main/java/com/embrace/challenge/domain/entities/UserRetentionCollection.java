@@ -20,14 +20,14 @@ public class UserRetentionCollection {
         Optional<UserRetention> userRetention = findLastUserRetentionIfExists(record);
 
         userRetention.ifPresentOrElse(
-                userRetentionFounded -> userRetentionFounded.update(userRetentions, record),
+                userRetentionFounded -> userRetentionFounded.addOrUpdateIfApplies(userRetentions, record),
                 () -> userRetentions.add(new UserRetention(record))
         );
     }
 
     private Optional<UserRetention> findLastUserRetentionIfExists(Record record) {
         return userRetentions.stream()
-                .filter(userRetention -> userRetention.getId().equals(record.getUser()))
+                .filter(userRetention -> userRetention.getUserId().equals(record.getUser()))
                 .reduce((first, second) -> second);
     }
 

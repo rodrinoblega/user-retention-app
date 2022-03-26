@@ -19,7 +19,7 @@ public class UserRetentionPresenterImpl implements UserRetentionPresenter {
     public void present(UserRetentionUseCaseResponse userRetentionUseCaseResponse, DateRange dateRange) {
         setInitialAndFinalRangeDate(dateRange);
 
-        List<UserRetention> userRetentions = userRetentionUseCaseResponse.getUserRetentionCollection().getUserRetentions();
+        List<UserRetention> userRetentions = userRetentionUseCaseResponse.obtainListOfUserRetention();
         ConnectionDate dateToAnalizeStreaks = sartRangeDate;
         
 
@@ -29,9 +29,8 @@ public class UserRetentionPresenterImpl implements UserRetentionPresenter {
             stringBuilder.append(dateToAnalizeStreaks.getDay());
 
             processConsecutivelyOfAllPossibleInitialStreakDates(userRetentions, dateToAnalizeStreaks, stringBuilder);
-            
+
             dateToAnalizeStreaks = addOneDay(dateToAnalizeStreaks);
-            System.out.println(stringBuilder);
         }
     }
 
@@ -40,19 +39,21 @@ public class UserRetentionPresenterImpl implements UserRetentionPresenter {
         endRangeDate = dateRange.getFinalDate();
     }
 
-    private void processConsecutivelyOfAllPossibleInitialStreakDates(List<UserRetention> userRetentions, ConnectionDate analizedDate, StringBuilder stringBuilder) {
+    private void processConsecutivelyOfAllPossibleInitialStreakDates(List<UserRetention> userRetentions, ConnectionDate dateToAnalizeStreaks, StringBuilder stringBuilder) {
         int initialPossibleDayOfStreak = sartRangeDate.getDay();
         int finalPossibleDayOfStreak = endRangeDate.getDay();
 
         IntStream.range(initialPossibleDayOfStreak, finalPossibleDayOfStreak).forEach(
-                currentPossibleStreakDate -> {
-                    int quantityInThisRange = obtainConsecutivenessOfPossiblestreakDay(userRetentions, analizedDate, currentPossibleStreakDate);
+                currentPossibleInitialStreakDate -> {
+                    int quantityInThisRange = obtainConsecutivenessOfPossibleStreakDay(userRetentions, dateToAnalizeStreaks, currentPossibleInitialStreakDate);
                     stringBuilder.append(",").append(quantityInThisRange);
                 }
         );
+
+        System.out.println(stringBuilder);
     }
 
-    private int obtainConsecutivenessOfPossiblestreakDay(List<UserRetention> userRetentions, ConnectionDate analizedDate, int currentPossibleStreakDate) {
+    private int obtainConsecutivenessOfPossibleStreakDay(List<UserRetention> userRetentions, ConnectionDate analizedDate, int currentPossibleStreakDate) {
         return (int) userRetentions.stream()
                 .filter(userRetention -> userRetention.getConsecutiveDaysConnected() == currentPossibleStreakDate)
                 .filter(userRetention -> userRetention.getInitialStreakDate().equals(analizedDate))

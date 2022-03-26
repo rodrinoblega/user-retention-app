@@ -1,6 +1,9 @@
 package com.embrace.challenge.usecases.output;
 
+import com.embrace.challenge.domain.entities.UserRetention;
 import com.embrace.challenge.domain.entities.UserRetentionCollection;
+
+import java.util.List;
 import java.util.Objects;
 
 public class UserRetentionUseCaseResponse {
@@ -10,8 +13,8 @@ public class UserRetentionUseCaseResponse {
         this.userRetentionCollection = userRetentionCollection;
     }
 
-    public UserRetentionCollection getUserRetentionCollection() {
-        return userRetentionCollection;
+    public List<UserRetention> obtainListOfUserRetention() {
+        return  userRetentionCollection.getUserRetentions();
     }
 
     @Override

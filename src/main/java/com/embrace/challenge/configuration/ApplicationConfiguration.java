@@ -9,6 +9,7 @@ import com.embrace.challenge.frameworks.instrumentation.Instrumentation;
 import com.embrace.challenge.frameworks.instrumentation.Log4jImpl;
 import com.embrace.challenge.frameworks.interpreters.CSVInputInterpreter;
 import com.embrace.challenge.frameworks.interpreters.DateRangeInterpreterImpl;
+import com.embrace.challenge.frameworks.validations.InputValidation;
 import com.embrace.challenge.usecases.UserRetentionUseCase;
 import com.embrace.challenge.usecases.presenters.UserRetentionPresenter;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
 public class ApplicationConfiguration {
     @Bean
     public UserRetentionGateway userRetention() {
-        return new UserRetentionGateway(instrumentation(), userRetentionController(), dateRangeInterpreter());
+        return new UserRetentionGateway(instrumentation(), userRetentionController(), inputValidation());
     }
 
     @Bean
@@ -43,6 +44,9 @@ public class ApplicationConfiguration {
     public InputInterpreter interpreter() {
         return new CSVInputInterpreter(instrumentation());
     }
+
+    @Bean
+    public InputValidation inputValidation() { return new InputValidation(dateRangeInterpreter()); }
 
     @Bean
     public DateRangeInterpreter dateRangeInterpreter() { return new DateRangeInterpreterImpl(instrumentation()); }
