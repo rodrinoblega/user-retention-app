@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class DayInformationTest {
 
-    private Map<UserAndLogDate, Connections> registeredLogs = new HashMap<>();
+    private Map<UserAndLogDate, Connection> registeredLogs = new HashMap<>();
 
     @Test
     public void test_exist_logs_for_user_in_actual_day() {
@@ -23,7 +23,7 @@ public class DayInformationTest {
     }
 
     private void updateWithSameUserDay1(List<Day> daysInformation) {
-        daysInformation.get(1).recordLogAndUpdateStreakCounter(new UserAndLogDate("1", 2), daysInformation, registeredLogs);
+        daysInformation.get(1).recordActivityAndUpdateStreakCounter(new UserAndLogDate("1", 2), daysInformation, registeredLogs);
     }
 
     private void updateWithDay1(List<Day> daysInformation) {
@@ -32,9 +32,9 @@ public class DayInformationTest {
 
     private List<Day> prepareContext() {
         return List.of(
-                new FirstDayInformation(),
-                new DayInformation(),
-                new DayInformation()
+                new FirstDayInformation(14),
+                new DayInformation(14),
+                new DayInformation(14)
         );
     }
 

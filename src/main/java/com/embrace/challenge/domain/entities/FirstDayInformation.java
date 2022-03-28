@@ -4,15 +4,15 @@ import java.util.*;
 
 public class FirstDayInformation extends Day {
 
-    public FirstDayInformation() {
-        this.initialStreakDays = new ArrayList<>(Collections.nCopies(14, 0));
+    public FirstDayInformation(int finalRange) {
+        this.initialStreakDays = new ArrayList<>(Collections.nCopies(finalRange, 0));
     }
 
     @Override
-    public void recordLogAndUpdateStreakCounter(UserAndLogDate activityUserAndLogDate, List<Day> daysInformation, Map<UserAndLogDate, Connections> logsRegistered) {
-        if (thereAreNotLogsForUserInActivityDay(activityUserAndLogDate, logsRegistered)) {
+    public void recordActivityAndUpdateStreakCounter(UserAndLogDate activityUserAndLogDate, List<Day> daysInformation, Map<UserAndLogDate, Connection> logsRegistered) {
+        if (!hasTheUserAlreadyConnectedThisDay(activityUserAndLogDate, logsRegistered)) {
             this.addOneToInitialStreakDay();
-            this.createARecordInLogsRegistered(activityUserAndLogDate, new Connections(1, 1), logsRegistered);
+            this.createARecordInLogsRegistered(activityUserAndLogDate, new Connection(1, 1), logsRegistered);
         }
     }
 
@@ -21,7 +21,7 @@ public class FirstDayInformation extends Day {
         initialStreakDays.set(0, actualStreakDay + 1);
     }
 
-    public void createARecordInLogsRegistered(UserAndLogDate userAndLogDate, Connections connections, Map<UserAndLogDate, Connections> logsRegistered) {
-        logsRegistered.put(userAndLogDate, connections);
+    public void createARecordInLogsRegistered(UserAndLogDate userAndLogDate, Connection connection, Map<UserAndLogDate, Connection> logsRegistered) {
+        logsRegistered.put(userAndLogDate, connection);
     }
 }
