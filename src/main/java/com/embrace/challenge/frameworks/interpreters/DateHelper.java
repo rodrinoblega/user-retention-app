@@ -2,21 +2,21 @@ package com.embrace.challenge.frameworks.interpreters;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.Date;
-import java.util.TimeZone;
 
 public class DateHelper {
 
     public static int secondsToDay(String secondsString) {
-        long seconds = Long.parseLong(secondsString);
-        long miliSeconds = seconds * 1000;
+        long miliseconds = Long.parseLong(secondsString) * 1000;
+        Date date = new Date(miliseconds);
 
-        DateFormat day = new SimpleDateFormat("dd");
-        day.setTimeZone(TimeZone.getTimeZone("UTC-3"));
+        LocalDateTime localDateTime = date.toInstant().atOffset(ZoneOffset.UTC).toLocalDateTime();
+        OffsetDateTime offset = OffsetDateTime.of(localDateTime, ZoneOffset.UTC);
 
-        Date date = new Date(miliSeconds);
-
-        return Integer.parseInt(day.format(date));
+        return offset.getDayOfMonth();
     }
 
     public static boolean isTheFirstOfMonth(int initialDay) {

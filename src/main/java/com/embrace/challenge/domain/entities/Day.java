@@ -5,19 +5,22 @@ import java.util.Map;
 
 public abstract class Day {
     protected List<Integer> initialStreakDays;
-    protected Map<String, LogOfConnections> logOfConnectionsByUser;
 
-    public abstract void recordLogAndUpdateStreakCounter(String activityUserId, int activityConnectionDay, List<Day> daysInformation);
+    public abstract void recordLogAndUpdateStreakCounter(UserAndLogDate activityUserAndLogDate, List<Day> daysInformation, Map<UserAndLogDate, LogOfConnections> logsRegistered);
 
     public List<Integer> getInitialStreakDays() {
         return initialStreakDays;
     };
 
-    public void substractOneToPreviousStreakDayAndUpdateActual(int daysConnected) {
+    protected void substractOneToPreviousStreakDayAndUpdateActual(int daysConnected) {
         int initialPreviousStreakDay = initialStreakDays.get(daysConnected - 2);
         initialStreakDays.set(daysConnected - 2, initialPreviousStreakDay - 1);
 
         int actualStreakDay = initialStreakDays.get(daysConnected - 1);
         initialStreakDays.set(daysConnected - 1, actualStreakDay + 1);
+    }
+
+    protected boolean thereAreNotLogsForUserInActivityDay(UserAndLogDate activityUserAndLogDate, Map<UserAndLogDate, LogOfConnections> logsRegistered) {
+        return !logsRegistered.containsKey(new UserAndLogDate(activityUserAndLogDate.getUser(), activityUserAndLogDate.getDay()));
     }
 }

@@ -1,13 +1,11 @@
 package com.embrace.challenge.adapters.presenters;
 
 import com.embrace.challenge.domain.entities.*;
-import com.embrace.challenge.frameworks.interpreters.DateHelper;
-import com.embrace.challenge.usecases.presenters.UserRetentionPresenterV2;
+import com.embrace.challenge.usecases.presenters.UserRetentionPresenter;
 
 import java.util.List;
-import java.util.Map;
 
-public class UserRetentionPresenterV2Impl implements UserRetentionPresenterV2 {
+public class UserRetentionPresenterImpl implements UserRetentionPresenter {
 
     private int sartRangeDate;
     private int endRangeDate;

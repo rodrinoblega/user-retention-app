@@ -1,14 +1,16 @@
 package unit.domain.entities;
 
-import com.embrace.challenge.domain.entities.Day;
-import com.embrace.challenge.domain.entities.DayInformation;
-import com.embrace.challenge.domain.entities.FirstDayInformation;
+import com.embrace.challenge.domain.entities.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DayInformationTest {
+
+    private Map<UserAndLogDate, LogOfConnections> registeredLogs = new HashMap<>();
 
     @Test
     public void test_exist_logs_for_user_in_actual_day() {
@@ -21,7 +23,7 @@ public class DayInformationTest {
     }
 
     private void updateWithSameUserDay1(List<Day> daysInformation) {
-        daysInformation.get(1).recordLogAndUpdateStreakCounter("1", 2, daysInformation);
+        daysInformation.get(1).recordLogAndUpdateStreakCounter(new UserAndLogDate("1", 2), daysInformation, registeredLogs);
     }
 
     private void updateWithDay1(List<Day> daysInformation) {

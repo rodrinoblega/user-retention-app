@@ -6,7 +6,6 @@ public class DayInformation extends Day {
 
     public DayInformation() {
         this.initialStreakDays = new ArrayList<>(Collections.nCopies(14, 0));
-        this.logOfConnectionsByUser = new HashMap<>();
     }
 
     public List<Integer> getInitialStreakDays() {
@@ -14,21 +13,17 @@ public class DayInformation extends Day {
     }
 
     @Override
-    public void recordLogAndUpdateStreakCounter(String activityUserId, int activityConnectionDay, List<Day> daysInformation) {
+    public void recordLogAndUpdateStreakCounter(UserAndLogDate activityUserAndLogDate, List<Day> daysInformation, Map<UserAndLogDate, LogOfConnections> logsRegistered) {
 
-        Map<String, LogOfConnections> previousDayLogsByUser = obtainLogsOfPreviousDay(activityConnectionDay, daysInformation);
-
-        if (!anyLogsForUserInActualDay(activityUserId)) {
-            if (!anyLogsForUserInLastDay(activityUserId, previousDayLogsByUser)) {
+        if (thereAreNotLogsForUserInActivityDay(activityUserAndLogDate, logsRegistered)) {
+            if (thereAreNotLogsForUserInLastDay(activityUserAndLogDate, logsRegistered)) {
                 this.addOneToInitialStreakDay();
-                this.updateConnectionsByUser(activityUserId, new LogOfConnections(activityConnectionDay, 1));
+                this.createARecordInLogsRegistered(activityUserAndLogDate, new LogOfConnections(activityUserAndLogDate.getDay(), 1), logsRegistered);
             } else {
-                LogOfConnections previousLogs = obtainLogsForUser(activityUserId, previousDayLogsByUser);
-                Map<String, LogOfConnections> logsByUser = this.logOfConnectionsByUser;
+                LogOfConnections previousDayLogsUser = obtainLogsForUser(activityUserAndLogDate, logsRegistered);
 
-                updateActualDayWithConnectionInfo(activityUserId, previousLogs, logsByUser);
-
-                updateOcurrencesOfStreakDay(daysInformation, previousLogs);
+                this.updateARecordInLogsRegistered(activityUserAndLogDate, previousDayLogsUser, logsRegistered);
+                this.updateOcurrencesOfStreakDay(daysInformation, previousDayLogsUser);
             }
         }
     }
@@ -38,45 +33,38 @@ public class DayInformation extends Day {
         initialStreakDayInformation.substractOneToPreviousStreakDayAndUpdateActual(previousLogsOfConnectionByUser.getDaysConnected() + 1);
     }
 
-    private void updateActualDayWithConnectionInfo(String activityUserId, LogOfConnections previousLogsOfConnectionByUser, Map<String, LogOfConnections> logOfConnectionsByUser) {
+    private void updateARecordInLogsRegistered(UserAndLogDate activityUserAndLogDate, LogOfConnections previousLogsOfConnectionByUser, Map<UserAndLogDate, LogOfConnections> logOfConnectionsByUser) {
         LogOfConnections logOfConnections = new LogOfConnections(
                 previousLogsOfConnectionByUser.getInitialStreakDay(),
                 previousLogsOfConnectionByUser.getDaysConnected() + 1);
 
-        logOfConnectionsByUser.put(activityUserId, logOfConnections);
+        logOfConnectionsByUser.put(activityUserAndLogDate, logOfConnections);
     }
 
-    private LogOfConnections obtainLogsForUser(String activityUserId, Map<String, LogOfConnections> previousLogsConnectionsByUser) {
-        return previousLogsConnectionsByUser.get(activityUserId);
+    public void createARecordInLogsRegistered(UserAndLogDate userAndLogDate, LogOfConnections logOfConnections, Map<UserAndLogDate, LogOfConnections> logsRegistered) {
+        logsRegistered.put(userAndLogDate, logOfConnections);
     }
 
-    private Map<String, LogOfConnections> obtainLogsOfPreviousDay(int activityConnectionDay, List<Day> daysInformation) {
-        Day previousInformation = obtainPreviousDayInformation(activityConnectionDay, daysInformation);
-        return previousInformation.logOfConnectionsByUser;
+    private LogOfConnections obtainLogsForUser(UserAndLogDate activityUserAndLogDate, Map<UserAndLogDate, LogOfConnections> previousLogsConnectionsByUser) {
+
+        return previousLogsConnectionsByUser.get(new UserAndLogDate(activityUserAndLogDate.getUser(),
+                activityUserAndLogDate.getDay() - 1));
     }
 
-    private boolean anyLogsForUserInActualDay(String activityUserId) {
-        return this.logOfConnectionsByUser.containsKey(activityUserId);
-    }
-
-    private boolean anyLogsForUserInLastDay(String activityUserId, Map<String, LogOfConnections> previousLogsConnectionsByUser) {
-        return previousLogsConnectionsByUser.containsKey(activityUserId);
+    private boolean thereAreNotLogsForUserInLastDay(UserAndLogDate activityUserAndLogDate, Map<UserAndLogDate, LogOfConnections> previousLogsConnectionsByUser) {
+        return !previousLogsConnectionsByUser.containsKey(
+                new UserAndLogDate(
+                        activityUserAndLogDate.getUser(),
+                        activityUserAndLogDate.getDay() - 1)
+        );
     }
 
     private Day obtainDayInformation(int activityConnectionDay, List<Day> daysInformation) {
         return daysInformation.get(activityConnectionDay - 1);
     }
 
-    private Day obtainPreviousDayInformation(int activityConnectionDay, List<Day> daysInformation) {
-        return daysInformation.get(activityConnectionDay - 2);
-    }
-
     public void addOneToInitialStreakDay() {
         int actualStreakDay = initialStreakDays.get(0);
         initialStreakDays.set(0, actualStreakDay + 1);
-    }
-
-    public void updateConnectionsByUser(String user, LogOfConnections logOfConnections) {
-        logOfConnectionsByUser.put(user, logOfConnections);
     }
 }

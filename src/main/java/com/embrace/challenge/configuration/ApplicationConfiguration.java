@@ -2,7 +2,7 @@ package com.embrace.challenge.configuration;
 
 import com.embrace.challenge.adapters.interpreters.DateRangeInterpreter;
 import com.embrace.challenge.adapters.controllers.UserRetentionController;
-import com.embrace.challenge.adapters.presenters.UserRetentionPresenterV2Impl;
+import com.embrace.challenge.adapters.presenters.UserRetentionPresenterImpl;
 import com.embrace.challenge.frameworks.UserRetentionGateway;
 import com.embrace.challenge.frameworks.instrumentation.Instrumentation;
 import com.embrace.challenge.frameworks.instrumentation.Log4jImpl;
@@ -35,7 +35,7 @@ public class ApplicationConfiguration {
     }
 
     @Bean
-    public UserRetentionPresenterV2Impl userRetentionPresenterV2() { return new UserRetentionPresenterV2Impl(); }
+    public UserRetentionPresenterImpl userRetentionPresenterV2() { return new UserRetentionPresenterImpl(); }
 
     @Bean
     public InputValidation inputValidation() { return new InputValidation(dateRangeInterpreter()); }

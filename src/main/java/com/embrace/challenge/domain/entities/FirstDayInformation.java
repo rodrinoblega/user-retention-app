@@ -6,19 +6,14 @@ public class FirstDayInformation extends Day {
 
     public FirstDayInformation() {
         this.initialStreakDays = new ArrayList<>(Collections.nCopies(14, 0));
-        this.logOfConnectionsByUser = new HashMap<>();
     }
 
     @Override
-    public void recordLogAndUpdateStreakCounter(String activityUserId, int activityConnectionDay, List<Day> daysInformation) {
-        if (!anyLogsForUserInActualDay(activityUserId)) {
+    public void recordLogAndUpdateStreakCounter(UserAndLogDate activityUserAndLogDate, List<Day> daysInformation, Map<UserAndLogDate, LogOfConnections> logsRegistered) {
+        if (thereAreNotLogsForUserInActivityDay(activityUserAndLogDate, logsRegistered)) {
             this.addOneToInitialStreakDay();
-            this.updateConnectionsWith(activityUserId, new LogOfConnections(1, 1));
+            this.createARecordInLogsRegistered(activityUserAndLogDate, new LogOfConnections(1, 1), logsRegistered);
         }
-    }
-
-    private boolean anyLogsForUserInActualDay(String activityUserId) {
-        return this.logOfConnectionsByUser.containsKey(activityUserId);
     }
 
     public void addOneToInitialStreakDay() {
@@ -26,8 +21,7 @@ public class FirstDayInformation extends Day {
         initialStreakDays.set(0, actualStreakDay + 1);
     }
 
-    public void updateConnectionsWith(String user, LogOfConnections logOfConnections) {
-        logOfConnectionsByUser.put(user, logOfConnections);
-
+    public void createARecordInLogsRegistered(UserAndLogDate userAndLogDate, LogOfConnections logOfConnections, Map<UserAndLogDate, LogOfConnections> logsRegistered) {
+        logsRegistered.put(userAndLogDate, logOfConnections);
     }
 }

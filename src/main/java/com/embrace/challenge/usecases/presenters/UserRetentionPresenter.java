@@ -5,6 +5,6 @@ import com.embrace.challenge.domain.entities.*;
 import java.util.List;
 import java.util.Map;
 
-public interface UserRetentionPresenterV2 {
+public interface UserRetentionPresenter {
     void present(List<Day> dayInformations, DateRange dateRange);
 }

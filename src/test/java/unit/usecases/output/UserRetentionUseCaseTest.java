@@ -10,10 +10,10 @@ import org.junit.jupiter.api.Test;
 
 public class UserRetentionUseCaseTest {
 
-    private UserRetentionUseCase userRetentionPresenterV2 = new UserRetentionUseCase(new Instrumentation(new Log4jImpl()));
+    UserRetentionUseCase userRetentionUseCase = new UserRetentionUseCase(new Instrumentation(new Log4jImpl()));
 
     @Test
     public void invalid_path_should_throw_exception() {
-        Assertions.assertThrows(CSVException.class, () -> userRetentionPresenterV2.process("asdasd", new DateRange(1, 14)));
+        Assertions.assertThrows(CSVException.class, () -> userRetentionUseCase.process("asdasd", new DateRange(1, 14)));
     }
 }

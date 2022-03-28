@@ -12,29 +12,18 @@ import java.util.*;
 public class UserRetentionUseCase {
     private static final String ERRROR_MESSAGE = "There was a problem reading CSV";
     private final Instrumentation instrumentation;
-    private final List<Day> dayInformations = List.of(
-            new FirstDayInformation(),
-            new DayInformation(),
-            new DayInformation(),
-            new DayInformation(),
-            new DayInformation(),
-            new DayInformation(),
-            new DayInformation(),
-            new DayInformation(),
-            new DayInformation(),
-            new DayInformation(),
-            new DayInformation(),
-            new DayInformation(),
-            new DayInformation(),
-            new DayInformation()
-    );
+    private Map<UserAndLogDate, LogOfConnections> logsRegistered;
+    private List<Day> daysInformations;
 
     public UserRetentionUseCase(Instrumentation instrumentation) {
         this.instrumentation = instrumentation;
+        this.logsRegistered = new HashMap<>();
+        this.daysInformations = new ArrayList<>();
     }
 
     public List<Day> process(String path, DateRange dateRange) {
         try {
+            this.initialize();
 
             CSVReader csv = new CSVReader(new FileReader(path));
             String[] lineInArray;
@@ -44,19 +33,18 @@ public class UserRetentionUseCase {
                 int activityConnectionDay = getActivityConnectionDay(lineInArray);
 
                 Day day = obtainDayInformation(activityConnectionDay);
-
-                day.recordLogAndUpdateStreakCounter(activityUserId, activityConnectionDay, dayInformations);
+                day.recordLogAndUpdateStreakCounter(new UserAndLogDate(activityUserId, activityConnectionDay), daysInformations, logsRegistered);
             }
         } catch (Exception e) {
             instrumentation.logMessage(ERRROR_MESSAGE);
             throw new CSVException(ERRROR_MESSAGE);
         }
 
-        return dayInformations;
+        return daysInformations;
     }
 
     private Day obtainDayInformation(int activityConnectionDay) {
-        return dayInformations.get(activityConnectionDay - 1);
+        return daysInformations.get(activityConnectionDay - 1);
     }
 
     private int getActivityConnectionDay(String[] lineInArray) {
@@ -65,5 +53,15 @@ public class UserRetentionUseCase {
 
     private String obtainGetUserId(String[] lineInArray) {
         return lineInArray[1];
+    }
+
+    private List<Day> initialize() {
+        this.daysInformations.add(new FirstDayInformation());
+
+        for (int i = 2; i <= 14; i ++ ) {
+            daysInformations.add(new DayInformation());
+        }
+
+        return daysInformations;
     }
 }
