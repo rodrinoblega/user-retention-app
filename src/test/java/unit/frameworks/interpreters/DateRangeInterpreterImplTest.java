@@ -18,10 +18,10 @@ public class DateRangeInterpreterImplTest {
     }
 
     @Test
-    public void ars_with_range_date_should_return_valid_range_date() {
+    public void ars_with_custom_range_date_should_return_custom_valid_range_date() {
         DateRange dateRange = dateRangeInterpreter.obtainsDateRangeIfApply(new String[] {"path", "01102021", "10102021"});
 
-        Assertions.assertEquals(new DateRange(1,14), dateRange);
+        Assertions.assertEquals(new DateRange(1,10), dateRange);
     }
 
     @Test
@@ -48,6 +48,13 @@ public class DateRangeInterpreterImplTest {
     @Test
     public void ars_with_first_range_date_not_first_should_return_default_range_date() {
         DateRange dateRange = dateRangeInterpreter.obtainsDateRangeIfApply(new String[] {"path", "02", "03"});
+
+        Assertions.assertEquals(new DateRange(1, 14), dateRange);
+    }
+
+    @Test
+    public void ars_with_final_day_greater_than_thirty_one() {
+        DateRange dateRange = dateRangeInterpreter.obtainsDateRangeIfApply(new String[] {"path", "01", "33"});
 
         Assertions.assertEquals(new DateRange(1, 14), dateRange);
     }

@@ -32,14 +32,15 @@ public class UserRetentionUseCase {
 
                 String activityUserId = obtainGetUserId(lineInArray);
                 int activityConnectionDay = getActivityConnectionDay(lineInArray);
+                if (activityConnectionDay <= dateRange.getFinalDay()) {
+                    Day day = obtainDayInformation(activityConnectionDay);
 
-                Day day = obtainDayInformation(activityConnectionDay);
-
-                day.recordActivityAndUpdateStreakCounter(
-                        new UserAndLogDate(activityUserId, activityConnectionDay),
-                        streakDaysInformation,
-                        logsRegistered
-                );
+                    day.recordActivityAndUpdateStreakCounter(
+                            new UserAndLogDate(activityUserId, activityConnectionDay),
+                            streakDaysInformation,
+                            logsRegistered
+                    );
+                }
             }
         } catch (Exception e) {
             instrumentation.logMessage(ERRROR_MESSAGE);

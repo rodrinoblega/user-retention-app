@@ -20,4 +20,8 @@ public class DateHelper {
     public static boolean isTheFirstOfMonth(int initialDay) {
         return initialDay == 1;
     }
+
+    public static boolean isBetweenOneThirtyOne(int finalDate) {
+        return finalDate <= 31;
+    }
 }

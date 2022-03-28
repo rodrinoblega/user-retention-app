@@ -15,24 +15,33 @@ public class DateRangeInterpreterImpl implements DateRangeInterpreter {
     public DateRange obtainsDateRangeIfApply(String[] ars) {
         if (validateIfThereAreRangeDatesAsArgs(ars)) {
             try {
-                int initialDay = Integer.parseInt(ars[1]);
-                int finalDay = Integer.parseInt(ars[2]);
+                int initialDay = Integer.parseInt(ars[1].substring(0,2));
+                int finalDay = Integer.parseInt(ars[2].substring(0,2));
 
-                if (isTheFirstOfMonth(initialDay)) {
+                if (isTheFirstOfMonth(initialDay) && isBetweenOneThirtyOne(finalDay)) {
+                    instrumentation.logMessage("The new date range is from day " + initialDay +" to " + finalDay + ".");
                     return new DateRange(initialDay, finalDay);
                 }
-                instrumentation.logMessage("There was an error in your range dates. They should have a dd format, be in the same month and start the first day of the month.");
-                instrumentation.logMessage("We will take the default date range: 01/01/2021 - 14/01/2021.");
+                notifyError();
             } catch (Exception e) {
-                instrumentation.logMessage("There was an error in your range dates. They should have a dd format, be in the same month and start the first day of the month.");
+                notifyError();
                 return new DateRange(1, 14);
             }
         }
         return new DateRange(1, 14);
     }
 
+    private void notifyError() {
+        instrumentation.logMessage("There was an error in your range dates. They should have a dd format, be in the same month, be in the range from 1 to 31, and start the first day of the month.");
+        instrumentation.logMessage("We will take the default date range: 01/01/2021 - 14/01/2021.");
+    }
+
     private boolean isTheFirstOfMonth(int initialDate) {
         return DateHelper.isTheFirstOfMonth(initialDate);
+    }
+
+    private boolean isBetweenOneThirtyOne(int finalDate) {
+        return DateHelper.isBetweenOneThirtyOne(finalDate);
     }
 
     private boolean validateIfThereAreRangeDatesAsArgs(String[] ars) {

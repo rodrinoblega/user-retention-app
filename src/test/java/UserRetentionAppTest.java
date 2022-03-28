@@ -10,24 +10,38 @@ import java.nio.file.Path;
 public class UserRetentionAppTest {
 
     private static final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    ApplicationConfiguration applicationConfiguration = new ApplicationConfiguration();
 
     @BeforeAll
     public static void setUpStreams() {
         System.setOut(new PrintStream(outContent));
     }
 
+    @AfterEach
+    public void resetStreams() {
+        outContent.reset();
+    }
+
     @Test
     void test_entire_application() throws IOException {
         String[] ars = {"src/test/resources/entireAppInput.txt"};
-        ApplicationConfiguration applicationConfiguration = new ApplicationConfiguration();
         UserRetentionController userRetentionController = applicationConfiguration.obtainUserRetentionController();
 
         userRetentionController.process(ars);
-        Assertions.assertEquals(getExpectedResponse(), outContent.toString());
+        Assertions.assertEquals(getExpectedResponse("src/test/resources/entireAppResponse.txt"), outContent.toString());
     }
 
-    private String getExpectedResponse() throws IOException {
-        return Files.readString(Path.of("src/test/resources/entireAppResponse.txt"));
+    @Test
+    void test_entire_application_with_custom_range_date() throws IOException {
+        String[] ars = {"src/test/resources/entireAppInputRecordsExtended.txt", "01", "03"};
+        UserRetentionController userRetentionController = applicationConfiguration.obtainUserRetentionController();
+
+        userRetentionController.process(ars);
+        Assertions.assertEquals(getExpectedResponse("src/test/resources/entireAppResponseRecordsExtended.txt"), outContent.toString());
+    }
+
+    private String getExpectedResponse(String path) throws IOException {
+        return Files.readString(Path.of(path));
     }
 
 }
