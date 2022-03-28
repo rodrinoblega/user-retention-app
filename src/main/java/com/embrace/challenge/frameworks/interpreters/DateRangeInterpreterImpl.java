@@ -19,7 +19,7 @@ public class DateRangeInterpreterImpl implements DateRangeInterpreter {
                 int finalDay = Integer.parseInt(ars[2].substring(0,2));
 
                 if (isTheFirstOfMonth(initialDay) && isBetweenOneThirtyOne(finalDay)) {
-                    instrumentation.logMessage("The new date range is from day " + initialDay +" to " + finalDay + ".");
+                    System.out.println("The new date range is from day " + initialDay +" to " + finalDay + ".");
                     return new DateRange(initialDay, finalDay);
                 }
                 notifyError();

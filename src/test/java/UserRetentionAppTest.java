@@ -43,5 +43,4 @@ public class UserRetentionAppTest {
     private String getExpectedResponse(String path) throws IOException {
         return Files.readString(Path.of(path));
     }
-
 }
