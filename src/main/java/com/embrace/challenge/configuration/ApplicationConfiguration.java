@@ -1,17 +1,14 @@
 package com.embrace.challenge.configuration;
 
 import com.embrace.challenge.adapters.interpreters.DateRangeInterpreter;
-import com.embrace.challenge.adapters.presenters.UserRetentionPresenterImpl;
 import com.embrace.challenge.adapters.controllers.UserRetentionController;
-import com.embrace.challenge.adapters.interpreters.InputInterpreter;
+import com.embrace.challenge.adapters.presenters.UserRetentionPresenterV2Impl;
 import com.embrace.challenge.frameworks.UserRetentionGateway;
 import com.embrace.challenge.frameworks.instrumentation.Instrumentation;
 import com.embrace.challenge.frameworks.instrumentation.Log4jImpl;
-import com.embrace.challenge.frameworks.interpreters.CSVInputInterpreter;
 import com.embrace.challenge.frameworks.interpreters.DateRangeInterpreterImpl;
 import com.embrace.challenge.frameworks.validations.InputValidation;
 import com.embrace.challenge.usecases.UserRetentionUseCase;
-import com.embrace.challenge.usecases.presenters.UserRetentionPresenter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -29,21 +26,16 @@ public class ApplicationConfiguration {
 
     @Bean
     public UserRetentionController userRetentionController() {
-        return new UserRetentionController(userRetentionUseCase(), interpreter(), userRetentionPresenter());
+        return new UserRetentionController(userRetentionUseCaseV2(), userRetentionPresenterV2());
     }
 
     @Bean
-    public UserRetentionUseCase userRetentionUseCase() {
-        return new UserRetentionUseCase();
+    public UserRetentionUseCase userRetentionUseCaseV2() {
+        return new UserRetentionUseCase(instrumentation());
     }
 
     @Bean
-    public UserRetentionPresenter userRetentionPresenter() { return new UserRetentionPresenterImpl(); }
-
-    @Bean
-    public InputInterpreter interpreter() {
-        return new CSVInputInterpreter(instrumentation());
-    }
+    public UserRetentionPresenterV2Impl userRetentionPresenterV2() { return new UserRetentionPresenterV2Impl(); }
 
     @Bean
     public InputValidation inputValidation() { return new InputValidation(dateRangeInterpreter()); }

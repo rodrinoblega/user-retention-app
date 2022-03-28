@@ -1,31 +1,23 @@
 package com.embrace.challenge.adapters.controllers;
 
-import com.embrace.challenge.adapters.interpreters.InputInterpreter;
-import com.embrace.challenge.domain.entities.DateRange;
-import com.embrace.challenge.domain.entities.Record;
+import com.embrace.challenge.domain.entities.*;
 import com.embrace.challenge.usecases.UserRetentionUseCase;
-import com.embrace.challenge.usecases.output.UserRetentionUseCaseResponse;
-import com.embrace.challenge.usecases.presenters.UserRetentionPresenter;
+import com.embrace.challenge.usecases.presenters.UserRetentionPresenterV2;
 
 import java.util.List;
 
 public class UserRetentionController {
 
-    private final InputInterpreter inputInterpreter;
     private final UserRetentionUseCase userRetentionUseCase;
-    private final UserRetentionPresenter userRetentionPresenter;
+    private final UserRetentionPresenterV2 userRetentionPresenterV2;
 
-    public UserRetentionController(UserRetentionUseCase userRetentionUseCase, InputInterpreter inputInterpreter, UserRetentionPresenter userRetentionPresenter) {
+    public UserRetentionController(UserRetentionUseCase userRetentionUseCase, UserRetentionPresenterV2 userRetentionPresenterV2) {
         this.userRetentionUseCase = userRetentionUseCase;
-        this.inputInterpreter = inputInterpreter;
-        this.userRetentionPresenter = userRetentionPresenter;
+        this.userRetentionPresenterV2 = userRetentionPresenterV2;
     }
 
     public void process(String input, DateRange dateRange) {
-        List<Record> records = inputInterpreter.run(input);
-
-        UserRetentionUseCaseResponse userRetentionUseCaseResponse = userRetentionUseCase.process(records);
-
-        userRetentionPresenter.present(userRetentionUseCaseResponse, dateRange);
+        List<Day> day = userRetentionUseCase.process(input, dateRange);
+        userRetentionPresenterV2.present(day, dateRange);
     }
 }

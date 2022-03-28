@@ -3,20 +3,20 @@ package com.embrace.challenge.domain.entities;
 import java.util.Objects;
 
 public class DateRange {
-    private final ConnectionDate initialDate;
-    private final ConnectionDate finalDate;
+    private final int initialDay;
+    private final int finalDay;
 
-    public DateRange(ConnectionDate initialDate, ConnectionDate finalDate) {
-        this.initialDate = initialDate;
-        this.finalDate = finalDate;
+    public DateRange(int initialDay, int finalDay) {
+        this.initialDay = initialDay;
+        this.finalDay = finalDay;
     }
 
-    public ConnectionDate getInitialDate() {
-        return initialDate;
+    public int getInitialDay() {
+        return initialDay;
     }
 
-    public ConnectionDate getFinalDate() {
-        return finalDate;
+    public int getFinalDay() {
+        return finalDay;
     }
 
     @Override
@@ -24,11 +24,11 @@ public class DateRange {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DateRange dateRange = (DateRange) o;
-        return Objects.equals(initialDate, dateRange.initialDate) && Objects.equals(finalDate, dateRange.finalDate);
+        return initialDay == dateRange.initialDay && finalDay == dateRange.finalDay;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(initialDate, finalDate);
+        return Objects.hash(initialDay, finalDay);
     }
 }

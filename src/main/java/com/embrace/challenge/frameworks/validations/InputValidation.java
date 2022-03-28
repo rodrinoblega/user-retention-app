@@ -22,6 +22,6 @@ public class InputValidation {
 
         DateRange dateRange = dateRangeInterpreter.obtainsDateRangeIfApply(ars);
 
-        return new ValidatedInput(path,dateRange);
+        return new ValidatedInput(path, dateRange);
     }
 }
