@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class DayInformationTest {
 
-    private Map<UserAndLogDate, LogOfConnections> registeredLogs = new HashMap<>();
+    private Map<UserAndLogDate, Connections> registeredLogs = new HashMap<>();
 
     @Test
     public void test_exist_logs_for_user_in_actual_day() {

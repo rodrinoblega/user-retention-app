@@ -1,10 +1,10 @@
 package com.embrace.challenge.domain.entities;
 
-public class LogOfConnections {
+public class Connections {
     private int initialStreakDay;
     private int daysConnected;
 
-    public LogOfConnections(int initialStreakDay, int daysConnected) {
+    public Connections(int initialStreakDay, int daysConnected) {
         this.initialStreakDay = initialStreakDay;
         this.daysConnected = daysConnected;
     }

@@ -26,16 +26,16 @@ public class ApplicationConfiguration {
 
     @Bean
     public UserRetentionController userRetentionController() {
-        return new UserRetentionController(userRetentionUseCaseV2(), userRetentionPresenterV2());
+        return new UserRetentionController(userRetentionUseCase(), userRetentionPresenter());
     }
 
     @Bean
-    public UserRetentionUseCase userRetentionUseCaseV2() {
+    public UserRetentionUseCase userRetentionUseCase() {
         return new UserRetentionUseCase(instrumentation());
     }
 
     @Bean
-    public UserRetentionPresenterImpl userRetentionPresenterV2() { return new UserRetentionPresenterImpl(); }
+    public UserRetentionPresenterImpl userRetentionPresenter() { return new UserRetentionPresenterImpl(); }
 
     @Bean
     public InputValidation inputValidation() { return new InputValidation(dateRangeInterpreter()); }

@@ -9,10 +9,10 @@ public class FirstDayInformation extends Day {
     }
 
     @Override
-    public void recordLogAndUpdateStreakCounter(UserAndLogDate activityUserAndLogDate, List<Day> daysInformation, Map<UserAndLogDate, LogOfConnections> logsRegistered) {
+    public void recordLogAndUpdateStreakCounter(UserAndLogDate activityUserAndLogDate, List<Day> daysInformation, Map<UserAndLogDate, Connections> logsRegistered) {
         if (thereAreNotLogsForUserInActivityDay(activityUserAndLogDate, logsRegistered)) {
             this.addOneToInitialStreakDay();
-            this.createARecordInLogsRegistered(activityUserAndLogDate, new LogOfConnections(1, 1), logsRegistered);
+            this.createARecordInLogsRegistered(activityUserAndLogDate, new Connections(1, 1), logsRegistered);
         }
     }
 
@@ -21,7 +21,7 @@ public class FirstDayInformation extends Day {
         initialStreakDays.set(0, actualStreakDay + 1);
     }
 
-    public void createARecordInLogsRegistered(UserAndLogDate userAndLogDate, LogOfConnections logOfConnections, Map<UserAndLogDate, LogOfConnections> logsRegistered) {
-        logsRegistered.put(userAndLogDate, logOfConnections);
+    public void createARecordInLogsRegistered(UserAndLogDate userAndLogDate, Connections connections, Map<UserAndLogDate, Connections> logsRegistered) {
+        logsRegistered.put(userAndLogDate, connections);
     }
 }

@@ -12,7 +12,7 @@ import java.util.*;
 public class UserRetentionUseCase {
     private static final String ERRROR_MESSAGE = "There was a problem reading CSV";
     private final Instrumentation instrumentation;
-    private Map<UserAndLogDate, LogOfConnections> logsRegistered;
+    private Map<UserAndLogDate, Connections> logsRegistered;
     private List<Day> daysInformations;
 
     public UserRetentionUseCase(Instrumentation instrumentation) {

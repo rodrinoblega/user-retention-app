@@ -13,14 +13,14 @@ public class DayInformation extends Day {
     }
 
     @Override
-    public void recordLogAndUpdateStreakCounter(UserAndLogDate activityUserAndLogDate, List<Day> daysInformation, Map<UserAndLogDate, LogOfConnections> logsRegistered) {
+    public void recordLogAndUpdateStreakCounter(UserAndLogDate activityUserAndLogDate, List<Day> daysInformation, Map<UserAndLogDate, Connections> logsRegistered) {
 
         if (thereAreNotLogsForUserInActivityDay(activityUserAndLogDate, logsRegistered)) {
             if (thereAreNotLogsForUserInLastDay(activityUserAndLogDate, logsRegistered)) {
                 this.addOneToInitialStreakDay();
-                this.createARecordInLogsRegistered(activityUserAndLogDate, new LogOfConnections(activityUserAndLogDate.getDay(), 1), logsRegistered);
+                this.createARecordInLogsRegistered(activityUserAndLogDate, new Connections(activityUserAndLogDate.getDay(), 1), logsRegistered);
             } else {
-                LogOfConnections previousDayLogsUser = obtainLogsForUser(activityUserAndLogDate, logsRegistered);
+                Connections previousDayLogsUser = obtainLogsForUser(activityUserAndLogDate, logsRegistered);
 
                 this.updateARecordInLogsRegistered(activityUserAndLogDate, previousDayLogsUser, logsRegistered);
                 this.updateOcurrencesOfStreakDay(daysInformation, previousDayLogsUser);
@@ -28,30 +28,30 @@ public class DayInformation extends Day {
         }
     }
 
-    private void updateOcurrencesOfStreakDay(List<Day> daysInformation, LogOfConnections previousLogsOfConnectionByUser) {
+    private void updateOcurrencesOfStreakDay(List<Day> daysInformation, Connections previousLogsOfConnectionByUser) {
         Day initialStreakDayInformation = obtainDayInformation(previousLogsOfConnectionByUser.getInitialStreakDay(), daysInformation);
         initialStreakDayInformation.substractOneToPreviousStreakDayAndUpdateActual(previousLogsOfConnectionByUser.getDaysConnected() + 1);
     }
 
-    private void updateARecordInLogsRegistered(UserAndLogDate activityUserAndLogDate, LogOfConnections previousLogsOfConnectionByUser, Map<UserAndLogDate, LogOfConnections> logOfConnectionsByUser) {
-        LogOfConnections logOfConnections = new LogOfConnections(
+    private void updateARecordInLogsRegistered(UserAndLogDate activityUserAndLogDate, Connections previousLogsOfConnectionByUser, Map<UserAndLogDate, Connections> logOfConnectionsByUser) {
+        Connections connections = new Connections(
                 previousLogsOfConnectionByUser.getInitialStreakDay(),
                 previousLogsOfConnectionByUser.getDaysConnected() + 1);
 
-        logOfConnectionsByUser.put(activityUserAndLogDate, logOfConnections);
+        logOfConnectionsByUser.put(activityUserAndLogDate, connections);
     }
 
-    public void createARecordInLogsRegistered(UserAndLogDate userAndLogDate, LogOfConnections logOfConnections, Map<UserAndLogDate, LogOfConnections> logsRegistered) {
-        logsRegistered.put(userAndLogDate, logOfConnections);
+    public void createARecordInLogsRegistered(UserAndLogDate userAndLogDate, Connections connections, Map<UserAndLogDate, Connections> logsRegistered) {
+        logsRegistered.put(userAndLogDate, connections);
     }
 
-    private LogOfConnections obtainLogsForUser(UserAndLogDate activityUserAndLogDate, Map<UserAndLogDate, LogOfConnections> previousLogsConnectionsByUser) {
+    private Connections obtainLogsForUser(UserAndLogDate activityUserAndLogDate, Map<UserAndLogDate, Connections> previousLogsConnectionsByUser) {
 
         return previousLogsConnectionsByUser.get(new UserAndLogDate(activityUserAndLogDate.getUser(),
                 activityUserAndLogDate.getDay() - 1));
     }
 
-    private boolean thereAreNotLogsForUserInLastDay(UserAndLogDate activityUserAndLogDate, Map<UserAndLogDate, LogOfConnections> previousLogsConnectionsByUser) {
+    private boolean thereAreNotLogsForUserInLastDay(UserAndLogDate activityUserAndLogDate, Map<UserAndLogDate, Connections> previousLogsConnectionsByUser) {
         return !previousLogsConnectionsByUser.containsKey(
                 new UserAndLogDate(
                         activityUserAndLogDate.getUser(),
