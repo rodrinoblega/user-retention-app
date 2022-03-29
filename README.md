@@ -2,11 +2,11 @@
 
 ![technology Gradle](https://img.shields.io/badge/technology-Gradle-blue.svg)
 
-This is a basic Java Gradle application to analyze an application's user retention as we compute the number of users that use the application for a number of consecutive days.
+This is a Java Gradle application to analyze an application's user retention as we compute the number of users that use the application for a number of consecutive days.
 
 ## Run the program
 
-1. You should have installed [java 11](https://oracle.com/ar/java/technologies/javase/jdk11-archive-downloads.html)
+1. Install [Java 11](https://oracle.com/ar/java/technologies/javase/jdk11-archive-downloads.html)
 
 
 2. Run in your terminal
@@ -17,32 +17,29 @@ This is a basic Java Gradle application to analyze an application's user retenti
 
 3. The console should show you the response as follow:
 
-    ![](normal_response.png)
+    ![](images/normal_response.png)
 
 
 ## Considerations
 
 - It was considered that the input of the application is a file that always has information from the same month
 - It was considered that the default range of days is from 1 to 14
-- We have the possibility to specify a custom range of days, but we have some validations to have in mind:
-  - The custom range of days must be between 1 and 31
-  - The custom range of days must be start from 1
+- We have the possibility to specify a custom range of days, but there are some validations to have in mind:
+  - The custom range of days must be between 01 and 31
+  - The custom range of days must be started from 01
   - The custom range of days must have dd format
-  - The custom range of days 
 - If any of these validations are not met, we will take the default range of days (1-14)
 
-
-## Considerations
 
 ### Valid cases:
   
 
     - Custom range of days: 01 to 05
-  ![](custom_range_response.png)
+  ![](images/custom_range_response.png)
 
 
     - Custom range of days: 01 to 10
-  ![](custom_rangev2-response.png)
+  ![](images/custom_rangev2-response.png)
 
 
 
@@ -51,19 +48,19 @@ This is a basic Java Gradle application to analyze an application's user retenti
 
 
     - Range of days as string:
-  ![](day_range_as_string_response.png)
+  ![](images/day_range_as_string_response.png)
 
 
 
 
     - Invalid final day range:
-  ![](invalid_final_day_range_response.png)
+  ![](images/invalid_final_day_range_response.png)
 
 
 
 
     - Range of days with no dd format:
-  ![](range_days_with_no_dd_format.png)
+  ![](images/range_days_with_no_dd_format.png)
 
 
 ## Questions
