@@ -4,7 +4,7 @@
 
 This is a Java Gradle application to analyze an application's user retention as we compute the number of users that use the application for a number of consecutive days.
 
-## Run the program
+## How to run the application
 
 1. Install [Java 11](https://oracle.com/ar/java/technologies/javase/jdk11-archive-downloads.html)
 
