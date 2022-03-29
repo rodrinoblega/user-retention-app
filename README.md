@@ -64,7 +64,7 @@ This is a Java Gradle application to analyze an application's user retention as 
 
 ## Test
 
-The JaCoCo plugin provides code coverage metrics for Java code via integration with [JaCoCo](https://www.eclemma.org/jacoco/)
+The JaCoCo plugin provides code coverage metrics for Java code via integration with [JaCoCo](https://docs.gradle.org/current/userguide/jacoco_plugin.html)
 
 This plugin was used in this project reaching 100% of coverage in the lines of code:
 
