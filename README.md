@@ -83,7 +83,7 @@ You should have [Docker](https://www.docker.com/) installed
 
 
 
-![](images/pull_docker.png)
+   ![](images/pull_docker.png)
 
 
 - Run the repository
@@ -94,6 +94,7 @@ You should have [Docker](https://www.docker.com/) installed
 
 ![](images/run_docker.png)
 
+    - NOTE: May run a bit slower than running the jar directly
 
 
 ## Questions
