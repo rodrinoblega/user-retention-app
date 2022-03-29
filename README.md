@@ -8,11 +8,14 @@ This is a Java Gradle application to analyze an application's user retention as 
 
 1. Install [Java 11](https://oracle.com/ar/java/technologies/javase/jdk11-archive-downloads.html)
 
+2. Download the [User Retention](https://github.com/rodrinoblega/user-retention-app) GitHub repository  
 
-2. Run in your terminal
+3. At the root of the project, The last version of .jar was left. It's called user-retention-app-1.0.0.RELEASE.jar
+
+4. Go to the project's root and run it in your terminal
 
 
-   `java -jar user-retention-app-1.0.0.RELEASE.jar activity_data_2021_01_01.txt`
+   `java -jar user-retention-app-1.0.0.RELEASE.jar {fileToProcess}`
 
 
 3. The console should show you the response as follow:
