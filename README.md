@@ -62,6 +62,15 @@ This is a Java Gradle application to analyze an application's user retention as 
     - Range of days with no dd format:
   ![](images/range_days_with_no_dd_format.png)
 
+## Test
+
+The JaCoCo plugin provides code coverage metrics for Java code via integration with [JaCoCo](https://www.eclemma.org/jacoco/)
+
+This plugin was used in this project reaching 100% of coverage in the lines of code:
+
+![](images/code_report.png)
+
+    
 
 ## Questions
 
