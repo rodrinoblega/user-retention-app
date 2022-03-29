@@ -70,7 +70,31 @@ This plugin was used in this project reaching 100% of coverage in the lines of c
 
 ![](images/code_report.png)
 
-    
+## Docker
+
+The app is uploaded as an image in rnoblega/user-retention-app
+
+You should have [Docker](https://www.docker.com/) installed
+
+- The file activity_data_2021_01_01.txt is located in the image
+- Pull the repository
+
+ `docker pull rnoblega/user-retention-app:latest`
+
+
+
+![](images/pull_docker.png)
+
+
+- Run the repository
+  
+  `docker run rnoblega/user-retention-app activity_data_2021_01_01.txt`
+
+
+
+![](images/run_docker.png)
+
+
 
 ## Questions
 
