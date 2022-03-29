@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 public class InputValidationTest {
     
-    private InputValidation inputValidation = new InputValidation(new DateRangeInterpreterImpl(new Instrumentation(new Log4jImpl())));
+    private final InputValidation inputValidation = new InputValidation(new DateRangeInterpreterImpl(new Instrumentation(new Log4jImpl())));
     
     @Test
     public void invalid_path_should_throw_expcetion() {

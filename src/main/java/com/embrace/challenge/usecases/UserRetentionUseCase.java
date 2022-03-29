@@ -33,7 +33,7 @@ public class UserRetentionUseCase {
                 String activityUserId = obtainGetUserId(lineInArray);
                 int activityConnectionDay = getActivityConnectionDay(lineInArray);
 
-                if (activityConnectionDay <= dateRange.getFinalDay()) {
+                if (activityDayIsBeforeFinalDateRange(dateRange, activityConnectionDay)) {
                     Day day = obtainDayInformation(activityConnectionDay);
 
                     day.recordActivityAndUpdateStreakCounter(
@@ -51,6 +51,10 @@ public class UserRetentionUseCase {
         return new UserRetentionUseCaseResponse(streakDaysInformation);
     }
 
+    private boolean activityDayIsBeforeFinalDateRange(DateRange dateRange, int activityConnectionDay) {
+        return activityConnectionDay <= dateRange.getFinalDay();
+    }
+
     private Day obtainDayInformation(int activityConnectionDay) {
         return streakDaysInformation.get(activityConnectionDay - 1);
     }
@@ -66,7 +70,7 @@ public class UserRetentionUseCase {
     private List<Day> initializeStreakDaysInformation(DateRange dateRange) {
         this.streakDaysInformation.add(new FirstDayInformation(dateRange.getFinalDay()));
 
-        for (int i = 2; i <= dateRange.getFinalDay(); i ++ ) {
+        for (int i = 2; activityDayIsBeforeFinalDateRange(dateRange, i); i ++ ) {
             streakDaysInformation.add(new DayInformation(dateRange.getFinalDay()));
         }
 

@@ -33,11 +33,11 @@ public class UserRetentionAppTest {
 
     @Test
     void test_entire_application_with_custom_range_date() throws IOException {
-        String[] ars = {"src/test/resources/entireAppInputRecordsExtended.txt", "01", "03"};
+        String[] ars = {"src/test/resources/entireAppInputCustomRangeDate.txt", "01", "03"};
         UserRetentionController userRetentionController = applicationConfiguration.obtainUserRetentionController();
 
         userRetentionController.process(ars);
-        Assertions.assertEquals(getExpectedResponse("src/test/resources/entireAppResponseRecordsExtended.txt"), outContent.toString());
+        Assertions.assertEquals(getExpectedResponse("src/test/resources/entireAppResponseCustomRangeDate.txt"), outContent.toString());
     }
 
     private String getExpectedResponse(String path) throws IOException {

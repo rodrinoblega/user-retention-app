@@ -18,7 +18,7 @@ public class UserRetentionPresenterImpl implements UserRetentionPresenter {
 
         int dayToAnalizeStreaks = sartRangeDate;
 
-        while (dayToAnalizeStreaks - 1 <= endRangeDate - 1) {
+        while (dayToAnalizeStreakIsLessToFinalDay(dayToAnalizeStreaks)) {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(dayToAnalizeStreaks);
 
@@ -32,6 +32,10 @@ public class UserRetentionPresenterImpl implements UserRetentionPresenter {
 
             dayToAnalizeStreaks = dayToAnalizeStreaks + 1;
         }
+    }
+
+    private boolean dayToAnalizeStreakIsLessToFinalDay(int dayToAnalizeStreaks) {
+        return dayToAnalizeStreaks - 1 <= endRangeDate - 1;
     }
 
     private void setInitialAndFinalRangeDate(DateRange dateRange) {

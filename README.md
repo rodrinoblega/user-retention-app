@@ -72,7 +72,7 @@ This plugin was used in this project reaching 100% of coverage in the lines of c
 
 ## Docker
 
-The app is uploaded as an image in rnoblega/user-retention-app
+The app is uploaded as an image in [rnoblega/user-retention-app](https://hub.docker.com/repository/docker/rnoblega/user-retention-app)
 
 You should have [Docker](https://www.docker.com/) installed
 
