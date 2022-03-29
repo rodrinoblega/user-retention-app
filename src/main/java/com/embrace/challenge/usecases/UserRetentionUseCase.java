@@ -32,6 +32,7 @@ public class UserRetentionUseCase {
 
                 String activityUserId = obtainGetUserId(lineInArray);
                 int activityConnectionDay = getActivityConnectionDay(lineInArray);
+
                 if (activityConnectionDay <= dateRange.getFinalDay()) {
                     Day day = obtainDayInformation(activityConnectionDay);
 
