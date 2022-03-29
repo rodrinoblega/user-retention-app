@@ -6,10 +6,9 @@ plugins {
 apply plugin: 'application'
 apply plugin: 'java'
 apply plugin: 'jacoco'
-apply plugin: 'org.springframework.boot'
 
 group 'src'
-version '2.0.0.test'
+version '1.0.0.RELEASE'
 
 repositories {
     mavenCentral()
